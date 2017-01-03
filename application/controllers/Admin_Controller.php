@@ -14,11 +14,10 @@ class Admin_Controller extends CI_Controller {
             &&($this->router->fetch_class() != 'login'
             || $this->router->fetch_method() != 'index')
         ){
-            $redirect = $this->uri->uri_string();
-            if ( $_SERVER['QUERY_STRING']){
-                $redirect .= '?' . $_SERVER['QUERY_STRING'];
-            }
-            redirect('login/index?redirect='.$redirect);
+            $c = $this->router->fetch_class();
+            $m = $this->router->fetch_method();
+            $redirect = $c.'/'.$m;
+            redirect('c=login&m=index&redirect='.$redirect);
         }
     }
 }

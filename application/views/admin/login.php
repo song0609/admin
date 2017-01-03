@@ -19,7 +19,7 @@ echo form_open(site_url("c=login&m=formsubmit&redirect=".$redirect));
 <div class="container">
 
     <header>
-        <h1>后台管理系统 </h1>
+        <h1>Admix后台管理系统 </h1>
     </header>
     <div class="login-table">
         <div class="row">
@@ -38,8 +38,23 @@ echo form_open(site_url("c=login&m=formsubmit&redirect=".$redirect));
             </div>
         </div>
         <div class="row">
-            <div class="col-sm-12 al-r">
-                <input type="submit" name="submit" class="btn btn-primary" value="登录" placeholder="">
+            <label class="col-sm-3 control-label al-r"></label>
+            <div class="col-sm-4">
+                <input type="radio" name="user_type" id="optionsRadios2" value="0" checked>
+                客户
+            </div>
+            <div class="col-sm-4">
+                    <input type="radio" name="user_type"  id="optionsRadios1" value="1" >
+                    管理员
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-4 al-r" >
+            </div>
+            <div class="col-sm-4 al-r" >
+                <input type="submit" name="submit" style="font-size: 16px;" class="btn btn-large btn-primary btn-block" value="登录" placeholder="">
+            </div>
+            <div class="col-sm-4 al-r" >
             </div>
         </div>
     </div>

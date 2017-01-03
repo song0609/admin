@@ -18,7 +18,7 @@ class Login extends CI_Controller{
     }
     public function formsubmit() {
         header("Content-type:text/html;charset=utf-8");
-        $this->load->model('MAdmin','',TRUE);
+        $this->load->model(array('MAdmin','MClient'),'',TRUE);
         $this->load->library ( 'form_validation' );
         $redirect = isset($_GET['redirect'])?$_GET['redirect']:'admin/index';
         $this->form_validation->set_rules ( 'username', '用户名', 'required' , array('required' => '用户名不能为空'));
@@ -30,32 +30,38 @@ class Login extends CI_Controller{
             if (isset ( $_POST ['submit'] ) && ! empty ( $_POST ['submit'] )) {
                 $data = array (
                     'user' => $_POST ['username'],
-                    'pass' => md5($_POST ['password'])
+                    'pass' => md5($_POST ['password']),
+                    'type' => $_POST['user_type'],
                 );
                 $newdata = array(
                     'username'  =>  $data ['user'] ,
                     'userip'     => $_SERVER['REMOTE_ADDR'],
                     'luptime'   =>time()
                 );
+                if($data['type'] == 1 ){
                     $query = $this->MAdmin->getAdminByUsername($data ['user']);
-                    if(!$query){
-                        echo "<script>alert('用户不存在!');</script>";
+                }else{
+                    $query = $this->MClient->getClientByUsername($data ['user']);
+                }
+                if(!$query){
+                    echo "<script>alert('用户不存在!');</script>";
+                    $arr['redirect'] = $redirect;
+                    $this->load->view('admin/login',$arr);
+
+                }else{
+                    foreach ( $query as $row ) {
+                        $pass = $row['password'];
+                    }
+                    if ($pass == $data ['pass']) {
+                        $this->session->set_userdata($newdata);
+                        $route = explode('/',$redirect);
+                        redirect('c='.$route[0].'&m='.$route[1]);
+                    }else{
+                        echo "<script>alert('密码错误!');</script>";
                         $arr['redirect'] = $redirect;
                         $this->load->view('admin/login',$arr);
-
-                    }else{
-                        foreach ( $query as $row ) {
-                            $pass = $row['password'];
-                        }
-                        if ($pass == $data ['pass']) {
-                            $this->session->set_userdata($newdata);
-                            redirect($redirect);
-                        }else{
-                            echo "<script>alert('密码错误!');</script>";
-                            $arr['redirect'] = $redirect;
-                            $this->load->view('admin/login',$arr);
-                        }
                     }
+                }
             }
         }
     }
