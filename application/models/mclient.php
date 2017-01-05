@@ -12,7 +12,6 @@ class MClient extends CI_Model{
 
     function getClientByUsername($username){
         $query = $this->db->get_where('client', array('username'=>$username));
-        echo $this->db->sql();exit;
         return $query->result_array();
     }
 

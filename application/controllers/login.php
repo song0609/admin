@@ -55,7 +55,11 @@ class Login extends CI_Controller{
                     if ($pass == $data ['pass']) {
                         $this->session->set_userdata($newdata);
                         $route = explode('/',$redirect);
-                        redirect('c='.$route[0].'&m='.$route[1]);
+                        if(!empty($route[0]) && !empty($route[1])){
+                            redirect('c='.$route[0].'&m='.$route[1]);
+                        }else{
+                            redirect('c=admin&m=index');
+                        }
                     }else{
                         echo "<script>alert('密码错误!');</script>";
                         $arr['redirect'] = $redirect;
