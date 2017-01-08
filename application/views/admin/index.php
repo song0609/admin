@@ -74,7 +74,7 @@ var menu_config = [
             {
                 text: "广告主管理",
                 items: [],
-                href: "<?php echo site_url('c=admin&m=password');?>"
+                href: "<?php echo site_url('c=admin&m=getAdvertiserList');?>"
             },
             {
                 text: "广告管理",
@@ -90,6 +90,22 @@ var menu_config = [
                 text: "广告统计",
                 items: [],
                 href: "<?php echo site_url('c=admin&m=test');?>"
+            },
+            {
+                text: "管理员账户管理",
+                items: [
+                    {
+                        text: "新增用户",
+                        items: [],
+                        href: "<?php echo site_url('c=admin&m=addadmin');?>"
+                    },
+                    {
+                        text: "修改密码",
+                        items: [],
+                        href: "<?php echo site_url('c=admin&m=password');?>"
+                    }
+                ],
+                href: ""
             }
         ]
     }/*,

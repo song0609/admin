@@ -1,13 +1,15 @@
 <?php
 if( ! function_exists('pagination')){
-function pagination($uri,$per_page,$total,$uri_segment){
+function pagination($uri,$per_page,$total){
         $ci =& get_instance();
         $ci->load->library('pagination');
         $config['base_url'] = $uri;
         $config['total_rows'] = $total;
         $config['per_page'] = $per_page;
-        $config['uri_segment'] = $uri_segment;
+        //$config['uri_segment'] = $uri_segment;
         $config['num_links'] = 4;
+        $config['enable_query_strings'] = TRUE;
+        $config['page_query_string'] = TRUE;
         $config['use_page_numbers'] = TRUE;
         $config['full_tag_open'] = '<ul class="pagination">';
         $config['full_tag_close'] = '</ul>';

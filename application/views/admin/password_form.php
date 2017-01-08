@@ -21,6 +21,16 @@
         <div class="panel panel-default">
             <div class="panel-heading">修改密码</div>
             <div class="panel-body">
+                <?php if(isset($tips)){ ?>
+                    <div class="alert alert-success alert-dismissible show" role="alert">
+                        <?php echo isset($tips)?$tips:''; ?>
+                    </div>
+                <?php } ?>
+                <?php if(isset($errors)){ ?>
+                    <div class="alert alert-warning alert-dismissible show" role="alert">
+                        <?php echo isset($errors)?$errors:''; ?>
+                    </div>
+                <?php } ?>
                 <div class="row gap">
                     <label class="col-sm-2 control-label"><span class="required">*</span> 原密码</label>
                     <div class="col-sm-8">
@@ -54,11 +64,10 @@
 
 </div>
 
-<script src="<?php echo base_url().APPPATH.'views/';?>bootstrap/js/jquery.js"></script>
-<script src="<?php echo base_url().APPPATH.'views/';?>bootstrap/js/bootstrap.js"></script>
-<script src="<?php echo base_url().APPPATH.'views/';?>bootstrap/js/admin/vip.dream.js"></script>
+<script src="<?php echo base_url().'share/';?>bootstrap/js/jquery.js"></script>
+<script src="<?php echo base_url().'share/';?>bootstrap/js/bootstrap.js"></script>
+<script src="<?php echo base_url().'share/';?>bootstrap/js/admin/vip.dream.js"></script>
 <script>
-    var i = 0;
     $('#submit').on("click", function() {
         var password = $('#password').val();
         var repassword = $('#repassword').val();
@@ -66,28 +75,8 @@
             $('#message-password').html('<font color="red">与密码不一致！</font>');
             return false;
         }
-        if(i==0){
-            return false;
-        }
     });
 
-    $('#oldpassword').on('blur',function(){
-        var oldpassword = $('#oldpassword').val();
-        $.ajax({
-            type: "POST",
-            url: "<?php echo site_url('c=admin&m=isoldpassword');?>",
-            data: "password="+oldpassword,
-            success: function(msg){
-                if(msg==0){
-                    $('#message-oldpassword').html('<font color="red">原密码错误！</font>');
-                    i=0
-                }else{
-                    $('#message-oldpassword').html('');
-                    i = 1;
-                }
-            }
-        });
-    });
 </script>
 </body>
 </html>
