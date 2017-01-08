@@ -19,7 +19,7 @@ echo form_open(site_url("c=login&m=formsubmit&redirect=".$redirect));
 <div class="container">
 
     <header>
-        <h1>管理员后台管理系统 </h1>
+        <h1>客户后台管理系统 </h1>
     </header>
     <div class="login-table">
         <div class="row">
@@ -40,7 +40,7 @@ echo form_open(site_url("c=login&m=formsubmit&redirect=".$redirect));
         <div class="row">
             <label class="col-sm-3 control-label al-r"></label>
             <div class="col-sm-4">
-                <input type="text" name="user_type" value="1" style="display:none">
+                <input type="text" name="user_type" value="0" style="display:none">
             </div>
         </div>
         <div class="row">

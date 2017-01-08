@@ -48,9 +48,9 @@
 $active_group = 'default';
 $active_record = TRUE;
 
-$db['default']['hostname'] = '119.29.208.137';
+$db['default']['hostname'] = 'localhost';
 $db['default']['username'] = 'root';
-$db['default']['password'] = 'admin';
+$db['default']['password'] = '';
 $db['default']['database'] = 'db_ci';
 $db['default']['dbdriver'] = 'mysql';
 $db['default']['dbprefix'] = 'tc_';

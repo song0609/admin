@@ -34,7 +34,7 @@
                 <i class="glyphicon glyphicon-user"></i> <?php echo "欢迎&nbsp;&nbsp;&nbsp;&nbsp;".$username;?><span class="caret"></span>
             </a>
             <ul class="dropdown-menu arrow" role="menu">
-                <li><a href="<?php echo site_url('c=admin&m=logout');?>">退出 <i class="glyphicon glyphicon-log-out"></i></a></li>
+                <li><a href="<?php echo site_url('c=client&m=logout');?>">退出 <i class="glyphicon glyphicon-log-out"></i></a></li>
             </ul>
         </div>
         <!-- User End -->
@@ -49,7 +49,7 @@
 
     <!-- Main -->
     <div id="main">
-        <iframe id="main-frame" name="main-frame" frameborder="0" src="<?php echo site_url('c=admin&m=test');?>"></iframe>
+        <iframe id="main-frame" name="main-frame" frameborder="0" src="<?php echo site_url('c=client&m=test');?>"></iframe>
     </div>
     <!-- Main End -->
 
@@ -72,28 +72,23 @@ var menu_config = [
         id: "m0",
         menu: [
             {
-                text: "广告主管理",
+                text: "广告统计",
                 items: [],
-                href: "<?php echo site_url('c=admin&m=password');?>"
-            },
-            {
-                text: "广告管理",
-                items: [],
-                href: "<?php echo site_url('c=admin&m=test');?>"
+                href: "<?php echo site_url('c=client&m=test');?>"
             },
             {
                 text: "财务管理",
                 items: [],
-                href: "<?php echo site_url('c=admin&m=test');?>"
+                href: "<?php echo site_url('c=client&m=test');?>"
             },
             {
-                text: "广告统计",
+                text: "修改账号信息",
                 items: [],
-                href: "<?php echo site_url('c=admin&m=test');?>"
+                href: "<?php echo site_url('c=client&m=test');?>"
             }
         ]
-    }/*,
-    {
+    }
+    /*{
         id: "m1",
         menu: [
             {
@@ -128,12 +123,7 @@ var menu_config = [
         id: "m2",
         menu: [
             {
-                text: "新增用户",
-                items: [],
-                href: "<?php echo site_url('c=admin&m=addadmin');?>"
-            },
-            {
-                text: "修改密码",
+                text: "修改账号信息",
                 items: [],
                 href: "<?php echo site_url('c=admin&m=password');?>"
             }

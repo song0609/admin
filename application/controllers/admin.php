@@ -12,9 +12,8 @@ class Admin extends Admin_Controller {
         $this->load->view('admin/index',$arr);
     }
 
-    public function welcome(){
-        $arr['username'] = $this ->session->userdata('username');
-        $this->load->view('admin/welcome',$arr);
+    public function test(){
+        echo "test";exit;
     }
 
     public function parttime(){
@@ -150,7 +149,7 @@ class Admin extends Admin_Controller {
 
     public function logout(){
         $this->session->unset_userdata('username');
-        redirect('c=login&m=index');
+        redirect('c=login&m=admin_index');
     }
 
     public function addadmin(){
@@ -208,18 +207,4 @@ class Admin extends Admin_Controller {
         }
     }
 
-    public function test(){
-        $this->load->helper('captcha');
-        $vals = array(
-            'word' => rand(1000, 10000),
-            'img_path' => './captcha/',
-            'img_url' => 'http://localhost/admin/captcha/',
-            //'font_path' => './path/to/fonts/texb.ttf',
-            'img_width' => '150',
-            'img_height' => 30,
-            'expiration' => 7200
-        );
-        $cap = create_captcha($vals);
-        echo $cap['image'];
-    }
 }
