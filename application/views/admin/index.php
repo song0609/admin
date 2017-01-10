@@ -49,7 +49,7 @@
 
     <!-- Main -->
     <div id="main">
-        <iframe id="main-frame" name="main-frame" frameborder="0" src="<?php echo site_url('c=admin&m=test');?>"></iframe>
+        <iframe id="main-frame" name="main-frame" frameborder="0" src="<?php echo site_url('c=admin&m=getAdvertiserList');?>"></iframe>
     </div>
     <!-- Main End -->
 
@@ -95,7 +95,7 @@ var menu_config = [
                 text: "管理员账户管理",
                 items: [
                     {
-                        text: "新增用户",
+                        text: "新增管理员",
                         items: [],
                         href: "<?php echo site_url('c=admin&m=addadmin');?>"
                     },

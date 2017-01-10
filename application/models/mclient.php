@@ -35,5 +35,17 @@ class MClient extends CI_Model{
         $this->db->update('client', $data);
     }
 
+    public function isExistsUsername($username){
+        $query = $this->db->get_where('client', array('username'=>$username));
+        $num = $query->num_rows();
+        if(!$num){
+            return FALSE;
+        }else return TRUE;
+    }
+
+    public function saveClient($data){
+        $this->db->insert('client',$data);
+    }
+
 
 }

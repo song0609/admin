@@ -16,8 +16,12 @@
 <div class="container">
     <!-- 列表 -->
     <div class="panel panel-default">
-        <div class="panel-heading">广告主管理 &nbsp; <span class="badge"><?php echo $total;?></span></div>
+        <div class="panel-heading">广告主管理 &nbsp; <span class="badge"><?php echo $total;?></span>
+        <!--<button type="button" class="btn btn-primary btn-sm">添加广告主</button>-->
+        <span><a href="<?php echo site_url("c=admin&m=addAdvertiser")?>" class="btn btn-large btn-primary" style="padding: 0">添加广告主</a></span>
+        </div>
         <table class="table table-hover table-striped">
+
             <thead>
             <tr>
                 <th>账号</th>
@@ -34,7 +38,7 @@
                 echo "<tr>";
                 echo "<td>{$value['username']}</td>";
                 echo "<td>{$value['advertiser']}</td>";
-                echo "<td></td>";
+                echo "<td><label id='comsumeTotal' style='font-style: italic' text='查看消耗金额'>查看消耗金额</label>"."</td>";
                 echo "<td>{$value['remain_count']}</td>";
                 echo "<td>";
                 if($value['status']==1){
@@ -111,6 +115,13 @@
         alertModal(".modal-alert",i);
     });*/
 
+    $("#comsumeTotal").on("click", function() {
+
+        // To Do Something
+        var total = "1.00";//消耗金额查询
+        $("#comsumeTotal").text(total);
+        //alert($("#comsumeTotal").text());
+    });
 
     //
     $('.mySwitch').bootstrapSwitch();

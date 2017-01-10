@@ -98,6 +98,51 @@ class Admin extends Admin_Controller {
         $this->mclient->updateStatus($id,$status);
     }
 
+    public function addAdvertiser(){
+        $data['form'] = array();
+        $this->load->view('admin/adver_form',$data);
+    }
+
+    public function saveAdvertiser(){
+        $this->load->model('MClient','',TRUE);
+        $vo = array();
+        $username = $this->security->xss_clean($this->input->post('username'));
+        $password = $this->security->xss_clean($this->input->post('password'));
+        $advertiser = $this->security->xss_clean($this->input->post('advertiser'));
+        $linkman = $this->security->xss_clean($this->input->post('linkman'));
+        $phone = $this->security->xss_clean($this->input->post('phone'));
+        $email = $this->security->xss_clean($this->input->post('email'));
+        $bool = $this->MClient->isExistsUsername($username);
+        $form = array(
+            'username'=>$username,
+            'password'=>$password,
+            'advertiser'=>$advertiser,
+            'linkman'=>$linkman,
+            'phone'=>$phone,
+            'email'=>$email,
+        );
+        if($bool){
+            $errors['username'] = "该广告主用户名已存在";
+            $this->load->view ('admin/admin_form', array('errors'=>$errors,'form'=>$form));
+            return;
+        }
+        if(empty($username)||empty($password)){
+            $errors['username'] = "账号密码为必填";
+            $this->load->view ('admin/admin_form', array('errors'=>$errors,'form'=>$form));
+            return;
+        }
+        $data = array(
+            'username'=>$username,
+            'password'=>md5($password),
+            'advertiser'=>$advertiser,
+            'linkman'=>$linkman,
+            'phone'=>$phone,
+            'email'=>$email,
+        );
+        $this->MClient->saveClient($data);
+        $vo['tips'] = "保存成功";
+        $this->load->view ('admin/adver_form', $vo);
+    }
 
 
 }
