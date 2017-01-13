@@ -79,7 +79,7 @@ var menu_config = [
             {
                 text: "广告管理",
                 items: [],
-                href: "<?php echo site_url('c=admin&m=test');?>"
+                href: "<?php echo site_url('c=admin&m=getAdvertismentList');?>"
             },
             {
                 text: "财务管理",

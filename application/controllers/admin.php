@@ -79,7 +79,7 @@ class Admin extends Admin_Controller {
         $page = $this->input->get('per_page');
         $page = !empty($page)?$page:1;
         $total = $this->MClient->getTotalCount(1);
-        $pagesize = 1;
+        $pagesize = 10;
         $offset = $pagesize*($page-1);
         $data = $this->MClient->getAdvertiserList($offset,$pagesize);
         $arr['data'] = $data;
@@ -123,12 +123,12 @@ class Admin extends Admin_Controller {
         );
         if($bool){
             $errors['username'] = "该广告主用户名已存在";
-            $this->load->view ('admin/admin_form', array('errors'=>$errors,'form'=>$form));
+            $this->load->view ('admin/adver_form', array('errors'=>$errors,'form'=>$form));
             return;
         }
         if(empty($username)||empty($password)){
             $errors['username'] = "账号密码为必填";
-            $this->load->view ('admin/admin_form', array('errors'=>$errors,'form'=>$form));
+            $this->load->view ('admin/adver_form', array('errors'=>$errors,'form'=>$form));
             return;
         }
         $data = array(
@@ -142,6 +142,21 @@ class Admin extends Admin_Controller {
         $this->MClient->saveClient($data);
         $vo['tips'] = "保存成功";
         $this->load->view ('admin/adver_form', $vo);
+    }
+
+    public function getAdvertismentList(){
+        $this->load->helper('page');
+        $this->load->model('MAdvertisment','',TRUE);
+        $page = $this->input->get('per_page');
+        $page = !empty($page)?$page:1;
+        $total = $this->MAdvertisment->getTotalCount(1);
+        $pagesize = 10;
+        $offset = $pagesize*($page-1);
+        $data = $this->MAdvertisment->getAdvertismentList($offset,$pagesize);
+        $arr['data'] = $data;
+        $arr['pagination'] = pagination(site_url("c=admin&m=getAdvertismentList"),$pagesize,$total);
+        $arr['total'] = $total;
+        $this->load->view('admin/ads_list',$arr);
     }
 
 

@@ -16,37 +16,39 @@
 <div class="container">
     <!-- 列表 -->
     <div class="panel panel-default">
-        <div class="panel-heading">广告主管理 &nbsp; <span class="badge"><?php echo $total;?></span>
-        <!--<button type="button" class="btn btn-primary btn-sm">添加广告主</button>-->
-        <span><a href="<?php echo site_url("c=admin&m=addAdvertiser")?>" class="btn btn-large btn-primary" style="padding: 0">添加广告主</a></span>
+        <div class="panel-heading">广告管理 &nbsp; <span class="badge"><?php echo $total;?></span>
+            <!--<button type="button" class="btn btn-primary btn-sm">添加广告主</button>-->
+            <span><a href="<?php echo site_url("c=admin&m=addAdvertisment")?>" class="btn btn-large btn-primary" style="padding: 0">添加广告</a></span>
         </div>
         <table class="table table-hover table-striped">
 
             <thead>
             <tr>
-                <th>账号</th>
-                <th>公司名称</th>
-                <th>消耗金额</th>
-                <th>账户余额</th>
-                <th>广告主状态</th>
-
+                <th>广告名称</th>
+                <th>广告主名称</th>
+                <th>广告模式</th>
+                <th>投放平台</th>
+                <th>广告单价</th>
+                <th>广告地址</th>
+                <th>广告状态</th>
+                <th>效率折扣</th>
+                <th></th>
             </tr>
             </thead>
             <tbody>
             <?php
             foreach($data as $value){
                 echo "<tr>";
-                echo "<td>{$value['username']}</td>";
-                echo "<td>{$value['advertiser']}</td>";
-                echo "<td><label id='comsumeTotal' style='font-style: italic' text='查看消耗金额'>查看消耗金额</label>"."</td>";
-                echo "<td>{$value['remain_count']}</td>";
+                echo "<td>{$value['ads_name']}</td>";
+                echo "<td>{$value['client_id']}</td>";
+                echo "<td>{$value['ads_type']}</td>";
+                echo "<td>{$value['platform']}</td>";
+                echo "<td>{$value['price']}</td>";
+                echo "<td>{$value['ads_url']}</td>";
+                echo "<td>{$value['ads_status']}</td>";
+                echo "<td>{$value['discount']}</td>";
                 echo "<td>";
-                if($value['status']==1){
-                    echo "<input type='checkbox' class='mySwitch' name='switch' checked data-size='large' data-on-text='开通' data-off-text='关闭' value='{$value['id']}'>&nbsp;";
-                }else{
-                    echo "<input type='checkbox' class='mySwitch' name='switch' data-size='large' data-on-text='开通' data-off-text='关闭' value='{$value['id']}'>&nbsp;";
-                }
-                //echo "<button class='btn btn-danger btn-sm' data-role='delbutton' value='{$value['id']}'> 删除</button>&nbsp;";
+                echo '<a href="'.site_url("c=admin&m=editAdvertisment").'" class="btn btn-large btn-primary" style="padding: 0">编辑</a>&nbsp;';
                 echo "</td>";
                 echo "</tr>";
             }
@@ -82,46 +84,6 @@
 <script src="<?php echo base_url();?>share/bootstrap/js/admin/vip.dream.js"></script>
 <script src="<?php echo base_url();?>share/bootstrap/js/switch/bootstrap-switch.min.js"></script>
 <script>
-
-    // 提示模态框
-    /*var alertModal = function(elem, i) {
-
-        console.log(ts);
-
-        var ts  = $(elem),
-            btn = ts.find('[data-role="submitbutton"]');
-
-        ts.modal('show');
-
-        btn.off("click");
-        btn.on("click", function() {
-            $.ajax({
-                type: "GET",
-                url: "<?php echo site_url('c=admin&m=delfoundlost');?>",
-                data: "id="+i,
-                success: function(msg){
-                    history.go(0);
-                }
-            });
-        });
-
-    };
-
-    //
-    $('[data-role="delbutton"]').on("click", function() {
-
-        // To Do Something
-        var i = $(this).val();
-        alertModal(".modal-alert",i);
-    });*/
-
-    $("#comsumeTotal").on("click", function() {
-
-        // To Do Something
-        var total = "1.00";//消耗金额查询
-        $("#comsumeTotal").text(total);
-        //alert($("#comsumeTotal").text());
-    });
 
     //
     $('.mySwitch').bootstrapSwitch();
