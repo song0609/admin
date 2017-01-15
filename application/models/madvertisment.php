@@ -16,10 +16,25 @@ class MAdvertisment extends CI_Model{
         return $query->num_rows();
     }
 
-    public function getAdvertismentList($offset,$pagesize){
+    public function getAdvertismentList($offset,$pagesize,$opts=array()){
         $this->db->limit($pagesize,$offset);
+        if(!empty($opts)){
+            $this->db->where('id',$opts['id']);
+        }
         $this->db->from('advertisment');
         $query = $this->db->get();
+        //echo $this->db->last_query();exit;
         return $query->result_array();
+    }
+
+    public function saveAdvertisment($data){
+        $this->db->insert('advertisment',$data);
+    }
+
+    public function updateAdvertisment($data,$id){
+        $param = array('client_id','ads_name','ads_type','platform','price','ads_url','ads_status','discount','third_platform','username','password');
+        unset($data['id']);
+        $this->db->where('id', $id);
+        $this->db->update('advertisment', $data);
     }
 }

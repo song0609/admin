@@ -40,15 +40,16 @@
             foreach($data as $value){
                 echo "<tr>";
                 echo "<td>{$value['ads_name']}</td>";
-                echo "<td>{$value['client_id']}</td>";
+                echo "<td>{$clients[$value['client_id']]['username']}</td>";
                 echo "<td>{$value['ads_type']}</td>";
                 echo "<td>{$value['platform']}</td>";
                 echo "<td>{$value['price']}</td>";
                 echo "<td>{$value['ads_url']}</td>";
-                echo "<td>{$value['ads_status']}</td>";
+                $status = ($value['ads_status']=='0')?'暂停':'开启';
+                echo "<td>".$status."</td>";
                 echo "<td>{$value['discount']}</td>";
                 echo "<td>";
-                echo '<a href="'.site_url("c=admin&m=editAdvertisment").'" class="btn btn-large btn-primary" style="padding: 0">编辑</a>&nbsp;';
+                echo '<a href="'.site_url("c=admin&m=editAdvertisment&id={$value['id']}").'" class="btn btn-large btn-primary" style="padding: 0">编辑</a>&nbsp;';
                 echo "</td>";
                 echo "</tr>";
             }

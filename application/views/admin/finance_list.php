@@ -16,35 +16,31 @@
 <div class="container">
     <!-- 列表 -->
     <div class="panel panel-default">
-        <div class="panel-heading">招领信息 &nbsp; <span class="badge"><?php echo $total;?></span></div>
+        <div class="panel-heading">财务管理 &nbsp; <span class="badge"><?php echo $total;?></span>
+            <!--<button type="button" class="btn btn-primary btn-sm">添加广告主</button>-->
+            <span><a href="<?php echo site_url("c=admin&m=addFinance")?>" class="btn btn-large btn-primary" style="padding: 0">添加记录</a></span>
+        </div>
         <table class="table table-hover table-striped">
+
             <thead>
             <tr>
-                <th>拾获地点</th>
-                <th>拾获时间</th>
-                <th>类型</th>
+                <th>广告主名称</th>
+                <th>充值金额</th>
+                <th>充值时间</th>
                 <th>备注</th>
-                <th>联系方式</th>
-                <th></th>
             </tr>
             </thead>
             <tbody>
             <?php
             foreach($data as $value){
                 echo "<tr>";
-                echo "<td>{$value['happen_place']}</td>";
-                echo "<td>{$value['happen_time']}</td>";
-                echo "<td>{$value['type_name']}</td>";
-                echo "<td>{$value['remarks']}</td>";
-                echo "<td>{$value['phone']}</td>";
-                echo "<td>";
-                if($value['is_display']==1){
-                    echo "<input type='checkbox' class='mySwitch' name='switch' checked data-size='large' data-on-text='显示' data-off-text='隐藏' value='{$value['id']}'>&nbsp;";
-                }else{
-                    echo "<input type='checkbox' class='mySwitch' name='switch' data-size='large' data-on-text='显示' data-off-text='隐藏' value='{$value['id']}'>&nbsp;";
-                }
-                echo "<button class='btn btn-danger btn-sm' data-role='delbutton' value='{$value['id']}'> 删除</button>&nbsp;";
-                echo "</td>";
+                echo "<td>{$clients[$value['client_id']]['username']}</td>";
+                echo "<td>￥{$value['money']}</td>";
+                echo "<td>".date('Y-m-d',$value['time'])."</td>";
+                echo "<td>{$value['note']}</td>";
+                /*echo "<td>";
+                echo '<a href="'.site_url("c=admin&m=editFinance&id={$value['id']}").'" class="btn btn-large btn-primary" style="padding: 0">编辑</a>&nbsp;';
+                echo "</td>";*/
                 echo "</tr>";
             }
             ?>
@@ -59,7 +55,7 @@
     <!-- 列表 End -->
 
     <!-- 提示模态框 -->
-    <div class="modal fade modal-alert" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <!--<div class="modal fade modal-alert" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-sm">
             <div class="modal-content">
                 <div class="modal-body">是否确定删除？</div>
@@ -69,7 +65,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div>-->
     <!-- 提示模态框 End -->
 
 </div>
@@ -79,39 +75,6 @@
 <script src="<?php echo base_url();?>share/bootstrap/js/admin/vip.dream.js"></script>
 <script src="<?php echo base_url();?>share/bootstrap/js/switch/bootstrap-switch.min.js"></script>
 <script>
-
-    // 提示模态框
-    var alertModal = function(elem,i) {
-
-        console.log(ts);
-
-        var ts  = $(elem),
-            btn = ts.find('[data-role="submitbutton"]');
-
-        ts.modal('show');
-
-        btn.off("click");
-        btn.on("click", function() {
-            $.ajax({
-                type: "GET",
-                url: "<?php echo site_url('c=admin&m=delfoundlost');?>",
-                data: "id="+i,
-                success: function(msg){
-                    history.go(0);
-                }
-            });
-        });
-
-    };
-
-    //
-    $('[data-role="delbutton"]').on("click", function() {
-
-        // To Do Something
-        var i = $(this).val();
-        alertModal(".modal-alert",i);
-    });
-
 
     //
     $('.mySwitch').bootstrapSwitch();
@@ -126,9 +89,10 @@
             var id = $(this).val();
             $.ajax({
                 type: "GET",
-                url: "<?php echo site_url('c=admin&m=displayfoundlost');?>",
-                data: "id="+id+"&state="+state,
+                url: "<?php echo site_url('c=admin&m=statusAdvertiser');?>",
+                data: "id="+id+"&status="+state,
                 success: function(msg){
+                    alert("更新成功");
                 }
             });
 

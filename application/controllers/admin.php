@@ -7,6 +7,10 @@
  */
 require('Admin_Controller.php');
 class Admin extends Admin_Controller {
+
+    public static $third_platforms = array(
+        '1'=>'巨鲨',
+    );
     public function index(){
         $arr['username'] = $this ->session->userdata('username');
         $this->load->view('admin/index',$arr);
@@ -69,9 +73,6 @@ class Admin extends Admin_Controller {
         $this->load->view ('admin/password_form', $vo);
     }
 
-    public function test(){
-        echo "test";exit;
-    }
 
     public function getAdvertiserList(){
         $this->load->helper('page');
@@ -146,17 +147,137 @@ class Admin extends Admin_Controller {
 
     public function getAdvertismentList(){
         $this->load->helper('page');
-        $this->load->model('MAdvertisment','',TRUE);
+        $this->load->model(array('MAdvertisment','MClient'),'',TRUE);
         $page = $this->input->get('per_page');
         $page = !empty($page)?$page:1;
         $total = $this->MAdvertisment->getTotalCount(1);
         $pagesize = 10;
         $offset = $pagesize*($page-1);
         $data = $this->MAdvertisment->getAdvertismentList($offset,$pagesize);
+        $clients = $this->MClient->getAdvertiserList(0,100);
+        $clients_arr = array();
+        foreach($clients as $val){
+            $clients_arr[$val['id']] = $val;
+        }
         $arr['data'] = $data;
+        $arr['clients'] = $clients_arr;
         $arr['pagination'] = pagination(site_url("c=admin&m=getAdvertismentList"),$pagesize,$total);
         $arr['total'] = $total;
         $this->load->view('admin/ads_list',$arr);
+    }
+
+    public function addAdvertisment(){
+        $data['form'] = array();
+        $this->load->model(array('MClient'),'',TRUE);
+        $clients = $this->MClient->getAdvertiserList(0,100);
+        $data['clients'] = $clients;
+        $data['platforms'] = self::$third_platforms;
+        $this->load->view('admin/ads_form',$data);
+    }
+
+    public function saveAdvertisment(){
+        $this->load->model('MAdvertisment','',TRUE);
+        $vo = array();
+        $param = array('id','client_id','ads_name','ads_type','platform','price','ads_url','ads_status','discount','third_platform','username','password');
+        $param_data = array();
+        foreach($param as $v){
+            $param_data[$v] = $this->security->xss_clean($this->input->post($v));
+        }
+        $form = $param_data;
+        if(empty($param_data['username'])||empty($param_data['password'])){
+            $errors['password'] = "账号密码为必填";
+            $this->load->model(array('MClient'),'',TRUE);
+            $clients = $this->MClient->getAdvertiserList(0,100);
+            $data['clients'] = $clients;
+            $data['platforms'] = self::$third_platforms;
+            $data['errors'] = $errors;
+            $data['form'] = $form;
+            $this->load->view ('admin/ads_form', $data);
+            return;
+        }
+        if(!$form['id']){
+            $this->MAdvertisment->saveAdvertisment($param_data);
+        }else{
+            $this->MAdvertisment->updateAdvertisment($param_data,$param_data['id']);
+        }
+        $vo['tips'] = "保存成功";
+        redirect('c=admin&m=getAdvertismentList');
+    }
+
+    public function editAdvertisment(){
+        $data['form'] = array();
+        $this->load->model(array('MClient','MAdvertisment'),'',TRUE);
+        $id = $this->input->get('id');
+        $clients = $this->MClient->getAdvertiserList(0,100);
+        $data['clients'] = $clients;
+        $data['platforms'] = self::$third_platforms;
+        $res = $this->MAdvertisment->getAdvertismentList(0,1,array('id'=>$id));
+        if(empty($res[0])){
+            echo "<script>不存在该广告记录！</script>";
+            exit;
+        }
+        $data['form'] = $res[0];
+        $this->load->view('admin/ads_form',$data);
+    }
+
+    public function test(){
+        echo "test";exit;
+    }
+
+    public function getFinanceList(){
+        $this->load->helper('page');
+        $this->load->model(array('MFinance','MClient'),'',TRUE);
+        $page = $this->input->get('per_page');
+        $page = !empty($page)?$page:1;
+        $total = $this->MFinance->getTotalCount(1);
+        $pagesize = 10;
+        $offset = $pagesize*($page-1);
+        $data = $this->MFinance->getFinanceList($offset,$pagesize);
+        $clients = $this->MClient->getAdvertiserList(0,100);
+        $clients_arr = array();
+        foreach($clients as $val){
+            $clients_arr[$val['id']] = $val;
+        }
+        $arr['data'] = $data;
+        $arr['clients'] = $clients_arr;
+        $arr['pagination'] = pagination(site_url("c=admin&m=getFinanceList"),$pagesize,$total);
+        $arr['total'] = $total;
+        $this->load->view('admin/finance_list',$arr);
+    }
+
+    public function addFinance(){
+        $data['form'] = array();
+        $this->load->model(array('MClient'),'',TRUE);
+        $clients = $this->MClient->getAdvertiserList(0,100);
+        $data['clients'] = $clients;
+        $data['platforms'] = self::$third_platforms;
+        $this->load->view('admin/finance_form',$data);
+    }
+
+    public function saveFinance(){
+        $this->load->model('MFinance','',TRUE);
+        $vo = array();
+        $param = array('client_id','note','money');
+        $param_data = array();
+        foreach($param as $v){
+            $param_data[$v] = $this->security->xss_clean($this->input->post($v));
+        }
+        $param_data['time'] = time();
+        $form = $param_data;
+        if(empty($param_data['money'])){
+            $errors['money'] = "账号密码为必填";
+            $this->load->model(array('MClient'),'',TRUE);
+            $clients = $this->MClient->getAdvertiserList(0,100);
+            $data['clients'] = $clients;
+            $data['platforms'] = self::$third_platforms;
+            $data['errors'] = $errors;
+            $data['form'] = $form;
+            $this->load->view ('admin/finance_form', $data);
+            return;
+        }
+        $this->MFinance->saveFinance($param_data);
+        $vo['tips'] = "保存成功";
+        redirect('c=admin&m=getFinanceList');
     }
 
 

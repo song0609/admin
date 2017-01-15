@@ -84,7 +84,7 @@ var menu_config = [
             {
                 text: "财务管理",
                 items: [],
-                href: "<?php echo site_url('c=admin&m=test');?>"
+                href: "<?php echo site_url('c=admin&m=getFinanceList');?>"
             },
             {
                 text: "广告统计",

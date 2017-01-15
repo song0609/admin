@@ -27,7 +27,7 @@ class MClient extends CI_Model{
         return $query->result_array();
     }
 
-    function updateStatus($id,$status){
+    public function updateStatus($id,$status){
         $data = array(
             'status'=>$status,
         );
