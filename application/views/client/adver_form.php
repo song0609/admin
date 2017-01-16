@@ -17,11 +17,8 @@
 <div class="container">
 
     <!-- 列表 -->
-    <form class="form-horizontal" role="form" method="post" action="<?php echo site_url('c=admin&m=saveAdvertiser');?>">
+    <form class="form-horizontal" role="form" method="post" action="<?php echo site_url('c=client&m=updateAdvertiser');?>">
         <div class="panel panel-default">
-            <div class="panel-heading">新建广告主
-                <span><a href="<?php echo site_url('c=admin&m=getAdvertiserList') ?>" class="btn btn-large btn-primary" style="padding: 0">返回</a></span>
-            </div>
 
             <div class="panel-body">
                 <?php if(isset($tips)){ ?>
@@ -30,12 +27,14 @@
                     </div>
                 <?php } ?>
                 <div class="row gap">
+                    <div class="col-sm-8">
+                        <input id="id" name="id" type="hidden" class="form-control" value="<?php echo isset($form['id'])?$form['id']:0 ?>">
+                    </div>
+                </div>
+                <div class="row gap">
                     <label class="col-sm-2 control-label"><span class="required">*</span> 广告主账号</label>
                     <div class="col-sm-8">
-                        <input id="username" name="username" type="text" class="form-control" value="<?php echo isset($form['username'])?$form['username']:'' ?>" placeholder="用户名">
-                    </div>
-                    <div class="col-sm-2" id="message-username">
-                        <font color="red"><?php echo isset($errors)?$errors['username']:''; ?></font>
+                        <input id="username" name="username" type="text"  readonly = "readonly" class="form-control" value="<?php echo isset($form['username'])?$form['username']:'' ?>" placeholder="用户名">
                     </div>
                 </div>
                 <div class="row gap">
@@ -47,7 +46,10 @@
                 <div class="row gap">
                     <label class="col-sm-2 control-label"><span class="required">*</span> 账号密码</label>
                     <div class="col-sm-8">
-                        <input id="password" name="password" type="password" class="form-control" value="<?php echo isset($form['password'])?$form['password']:'' ?>" placeholder="账号密码">
+                        <input id="password" name="password" type="password" class="form-control" value="" placeholder="账号密码">
+                    </div>
+                    <div class="col-sm-2" id="message-password">
+                        <font color="red"><?php echo isset($errors)?$errors['password']:''; ?></font>
                     </div>
                 </div>
                 <div class="row gap">
@@ -55,7 +57,7 @@
                     <div class="col-sm-8">
                         <input id="repassword" name="repassword" type="password" class="form-control" placeholder="再次输入密码">
                     </div>
-                    <div class="col-sm-2" id="message-password">
+                    <div class="col-sm-2" id="message-repassword">
                     </div>
                 </div>
                 <div class="row gap">
@@ -96,7 +98,7 @@
         var password = $('#password').val();
         var repassword = $('#repassword').val();
         if(password!=repassword){
-            $('#message-password').html('<font color="red">与密码不一致！</font>');
+            $('#message-repassword').html('<font color="red">与密码不一致！</font>');
             return false;
         }
     });

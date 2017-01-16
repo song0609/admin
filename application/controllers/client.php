@@ -42,6 +42,52 @@ class Client extends Client_Controller {
         $arr['clients'] = $clients_arr;
         $arr['pagination'] = pagination(site_url("c=admin&m=getFinanceList"),$pagesize,$total);
         $arr['total'] = $total;
-        $this->load->view('admin/finance_list',$arr);
+        $this->load->view('client/finance_list',$arr);
+    }
+
+    public function editClientMessage(){
+        $this->load->model(array('MClient'),'',TRUE);
+        $username = $this->session->userdata('username');
+        $client = $this->MClient->getClientByUsername($username);
+        $client = $client[0];
+        $data['form'] = $client;
+        $this->load->view('client/adver_form',$data);
+    }
+
+    public function updateAdvertiser(){
+        $this->load->model('MClient','',TRUE);
+        $vo = array();
+        $id = $this->security->xss_clean($this->input->post('id'));
+        $username = $this->security->xss_clean($this->input->post('username'));
+        $password = $this->security->xss_clean($this->input->post('password'));
+        $advertiser = $this->security->xss_clean($this->input->post('advertiser'));
+        $linkman = $this->security->xss_clean($this->input->post('linkman'));
+        $phone = $this->security->xss_clean($this->input->post('phone'));
+        $email = $this->security->xss_clean($this->input->post('email'));
+        $form = array(
+            'id'=>$id,
+            'username'=>$username,
+            'password'=>$password,
+            'advertiser'=>$advertiser,
+            'linkman'=>$linkman,
+            'phone'=>$phone,
+            'email'=>$email,
+        );
+        if(empty($password)){
+            $errors['password'] = "密码不能为空！";
+            $this->load->view ('client/adver_form', array('errors'=>$errors,'form'=>$form));
+            return;
+        }
+        $data = array(
+            'password'=>md5($password),
+            'advertiser'=>$advertiser,
+            'linkman'=>$linkman,
+            'phone'=>$phone,
+            'email'=>$email,
+        );
+        $this->MClient->updateClient($id,$data);
+        $vo['tips'] = "保存成功";
+        $vo['form'] = $form;
+        $this->load->view ('client/adver_form', $vo);
     }
 }

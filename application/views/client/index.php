@@ -79,12 +79,12 @@ var menu_config = [
             {
                 text: "财务管理",
                 items: [],
-                href: "<?php echo site_url('c=client&m=test');?>"
+                href: "<?php echo site_url('c=client&m=getFinanceList');?>"
             },
             {
                 text: "修改账号信息",
                 items: [],
-                href: "<?php echo site_url('c=client&m=test');?>"
+                href: "<?php echo site_url('c=client&m=editClientMessage');?>"
             }
         ]
     }

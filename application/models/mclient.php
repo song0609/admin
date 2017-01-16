@@ -47,5 +47,10 @@ class MClient extends CI_Model{
         $this->db->insert('client',$data);
     }
 
+    public function updateClient($id,$data){
+        $this->db->where('id', $id);
+        $this->db->update('client', $data);
+    }
+
 
 }
