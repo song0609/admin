@@ -16,7 +16,7 @@ class Admin extends Admin_Controller {
         $this->load->view('admin/index',$arr);
     }
 
-    pub                                                                lic function logout(){
+    public function logout(){
         $this->session->unset_userdata('username');
         redirect('c=login&m=admin_index');
     }
