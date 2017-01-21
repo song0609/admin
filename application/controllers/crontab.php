@@ -43,6 +43,39 @@ class Crontab extends CI_Controller {
         echo "Crontab jushaCrontab end---".date('Y-m-d H:i:s',time()).PHP_EOL;
     }
 
+    public function jushaCrontab2(){
+        $time = time();
+        echo "Crontab jushaCrontab2 start---".date('Y-m-d H:i:s',$time).PHP_EOL;
+        $this->load->model(array('MAdvertisment','MConsume'),'',TRUE);
+        $ads = $this->MAdvertisment->getAdvertismentList(0,10000,array('third_platform'=>self::$third_platforms['jusha']));
+        $login_url = "https://www.jusha.com/login.php";
+        $select_url = "https://www.jusha.com/AdsMaster/public/getreportdata.php?action=earning_data&cycle=selectDate&App_OS=All&FeeTypeID=All&app=0&GameTypeID=All&historyToExcel=0";
+        //$date = date('Y-m-d',time());
+        $date = date("Y-m-d",strtotime("-1 day"));
+        $select_url .= "&sdate=$date&edate=$date";
+        foreach($ads as $v){
+            echo "deal with client_id".$v['client_id'].PHP_EOL;
+            $cookie = dirname(dirname(dirname(__FILE__))) . '/cookie/cookie_jusha_'.$v['client_id'].'.txt';
+            $post = array(
+                'nocode' => '1',
+                'username' => $v['username'],
+                'password' => $v['password'],
+            );
+            $this->login_post($login_url, $cookie, $post);
+            $content = $this->get_content($select_url, $cookie);
+            $content = json_decode($content,TRUE);
+            $cost = $content['total']['Total'];
+            $data = array(
+                'third_platform'=>self::$third_platforms['jusha'],
+                'client_id'=>$v['client_id'],
+                'consume'=>$cost,
+                'time'=>$time,
+            );
+            $this->MConsume->saveConsumeData($data);
+        }
+        echo "Crontab jushaCrontab2 end---".date('Y-m-d H:i:s',time()).PHP_EOL;
+    }
+
     public function login_post($url, $cookie, $post) {
         $curl = curl_init();//初始化curl模块
         curl_setopt($curl, CURLOPT_URL, $url);//登录提交的地址
