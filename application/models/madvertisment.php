@@ -18,8 +18,11 @@ class MAdvertisment extends CI_Model{
 
     public function getAdvertismentList($offset,$pagesize,$opts=array()){
         $this->db->limit($pagesize,$offset);
-        if(!empty($opts)){
+        if(!empty($opts['id'])){
             $this->db->where('id',$opts['id']);
+        }
+        if(!empty($opts['third_platform'])){
+            $this->db->where('third_platform',$opts['third_platform']);
         }
         $this->db->from('advertisment');
         $query = $this->db->get();

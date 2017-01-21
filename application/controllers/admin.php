@@ -16,7 +16,7 @@ class Admin extends Admin_Controller {
         $this->load->view('admin/index',$arr);
     }
 
-    public function logout(){
+    pub                                                                lic function logout(){
         $this->session->unset_userdata('username');
         redirect('c=login&m=admin_index');
     }
@@ -257,7 +257,7 @@ class Admin extends Admin_Controller {
     public function saveFinance(){
         $this->load->model('MFinance','',TRUE);
         $vo = array();
-        $param = array('client_id','note','money');
+        $param = array('client_id','note','money','third_platform');
         $param_data = array();
         foreach($param as $v){
             $param_data[$v] = $this->security->xss_clean($this->input->post($v));

@@ -38,7 +38,7 @@
                 echo "<tr>";
                 echo "<td>{$value['username']}</td>";
                 echo "<td>{$value['advertiser']}</td>";
-                echo "<td><label id='comsumeTotal' style='font-style: italic' text='查看消耗金额'>查看消耗金额</label>"."</td>";
+                echo '<td><label data-role="comsumeTotal" style="font-style: italic" text="查看消耗金额">查看消耗金额</label></td>';
                 echo "<td>{$value['remain_count']}</td>";
                 echo "<td>";
                 if($value['status']==1){
@@ -115,11 +115,12 @@
         alertModal(".modal-alert",i);
     });*/
 
-    $("#comsumeTotal").on("click", function() {
+    $('[data-role="comsumeTotal"]').on("click", function() {
 
         // To Do Something
         var total = "1.00";//消耗金额查询
-        $("#comsumeTotal").text(total);
+        //this.text(total);
+        $(this).text(total);
         //alert($("#comsumeTotal").text());
     });
 

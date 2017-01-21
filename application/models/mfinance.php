@@ -38,6 +38,23 @@ class MFinance extends CI_Model{
 
     public function saveFinance($data){
         $this->db->insert('finance',$data);
+        $this->load->model(array('MThirdPlatform'),'',TRUE);
+        $opts = array(
+            'client_id'=>$data['client_id'],
+            'third_platform'=>$data['third_platform'],
+        );
+        $p_data = array(
+            'client_id'=>$data['client_id'],
+            'third_platform'=>$data['third_platform'],
+            'total_account'=>$data['money'],
+        );
+        $record = $this->MThirdPlatform->getThirdPlatformList(0,1,$opts);
+        if($record){
+            $p_data['total_account'] = $record[0]['total_account'] + $data['money'];
+            $this->MThirdPlatform->updateThirdPlatform($p_data);
+        }else{
+            $this->MThirdPlatform->saveThirdPlatform($p_data);
+        }
     }
 
     public function updateFinance($data,$id){

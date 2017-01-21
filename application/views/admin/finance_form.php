@@ -60,6 +60,22 @@
                     </div>
                 </div>
                 <div class="row gap">
+                    <label class="col-sm-2 control-label"><span class="required">*</span> 第三方平台</label>
+                    <div class="col-sm-10">
+                        <select id="third_platform" name="third_platform">
+                            <?php
+                            foreach($platforms as $k=>$v){
+                                if(isset($form['third_platform']) && $form['third_platform']==$k){
+                                    echo "<option value='{$k}' selected>{$v}</option>";
+                                }else{
+                                    echo "<option value='{$k}' selected>{$v}</option>";
+                                }
+                            }
+                            ?>
+                        </select>
+                    </div>
+                </div>
+                <div class="row gap">
                     <label class="col-sm-2 control-label"> 备注</label>
                     <div class="col-sm-8">
                         <input id="note" name="note" type="note" class="form-control" value="<?php echo isset($form['note'])?$form['note']:''?>" placeholder="备注">
