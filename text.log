@@ -1,0 +1,22 @@
+<div style="border:1px solid #990000;padding-left:20px;margin:0 0 10px 0;">
+
+<h4>A PHP Error was encountered</h4>
+
+<p>Severity: Notice</p>
+<p>Message:  Undefined index: REMOTE_ADDR</p>
+<p>Filename: core/Input.php</p>
+<p>Line Number: 351</p>
+
+</div><div style="border:1px solid #990000;padding-left:20px;margin:0 0 10px 0;">
+
+<h4>A PHP Error was encountered</h4>
+
+<p>Severity: Warning</p>
+<p>Message:  Cannot modify header information - headers already sent by (output started at D:\wamp\www\1\admin\system\core\Exceptions.php:185)</p>
+<p>Filename: libraries/Session.php</p>
+<p>Line Number: 675</p>
+
+</div>111
+111
+111
+111

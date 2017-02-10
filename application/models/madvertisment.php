@@ -21,6 +21,9 @@ class MAdvertisment extends CI_Model{
         if(!empty($opts['id'])){
             $this->db->where('id',$opts['id']);
         }
+        if(!empty($opts['client_id'])){
+            $this->db->where('client_id',$opts['client_id']);
+        }
         if(!empty($opts['third_platform'])){
             $this->db->where('third_platform',$opts['third_platform']);
         }

@@ -89,7 +89,7 @@ var menu_config = [
             {
                 text: "广告统计",
                 items: [],
-                href: "<?php echo site_url('c=admin&m=test');?>"
+                href: "<?php echo site_url('c=admin&m=advertismentInfo');?>"
             },
             {
                 text: "管理员账户管理",

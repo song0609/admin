@@ -37,6 +37,7 @@ class Crontab extends CI_Controller {
                 'client_id'=>$v['client_id'],
                 'consume'=>$cost,
                 'time'=>$time,
+                'ads_id'=>$v['id'],
             );
             $this->MConsume->saveConsumeData($data);
         }
@@ -69,7 +70,8 @@ class Crontab extends CI_Controller {
                 'third_platform'=>self::$third_platforms['jusha'],
                 'client_id'=>$v['client_id'],
                 'consume'=>$cost,
-                'time'=>$time,
+                'time'=>strtotime(date("Y-m-d"))-1,
+                'ads_id'=>$v['id'],
             );
             $this->MConsume->saveConsumeData($data);
         }

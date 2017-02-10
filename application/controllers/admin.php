@@ -220,8 +220,18 @@ class Admin extends Admin_Controller {
         $this->load->view('admin/ads_form',$data);
     }
 
-    public function test(){
-        echo "test";exit;
+    public function advertismentInfo(){
+        $data = array();
+        $client_id = $this->input->get('client_id');
+        $putdate = $this->input->get('putdate');
+        $this->load->model(array('MAdvertisment','MClient'),'',TRUE);
+        $clients = $this->MClient->getAdvertiserList(0,100);
+        $data['clients'] = $clients;
+        if($client_id){
+            $ads = $this->MAdvertisment->getAdvertismentList(0,100,array('client_id'=>$client_id));
+            $data['ads'] = $ads;
+        }
+        $this->load->view('admin/ads_info',$data);
     }
 
     public function getFinanceList(){
