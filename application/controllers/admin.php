@@ -224,21 +224,33 @@ class Admin extends Admin_Controller {
         $data = array();
         $client_id = $this->input->get('client_id');
         $putdate = $this->input->get('putdate');
-        $this->load->model(array('MAdvertisment','MClient','MConsume'),'',TRUE);
+        $this->load->model(array('MAdvertisment','MClient','MConsume','MThirdPlatform'),'',TRUE);
         $clients = $this->MClient->getAdvertiserList(0,100);
         $data['clients'] = $clients;
         $count=0;
         if($client_id){
             $ads = $this->MAdvertisment->getAdvertismentList(0,100,array('client_id'=>$client_id));
+            $finance_count = $this->MThirdPlatform->getThirdPlatformList(0,10000,array('client_id'=>$client_id));
+            $platform_count_list = array();
+            $platform_pay_list = array();
+            foreach($finance_count as $v){
+                $platform_count_list[$v['third_platform']] = $v['total_account'];//每个平台充值总额
+            }
             foreach($ads as $k=>$v){
                 $sum = $this->MConsume->getCountConsume(array('client_id'=>$client_id,'ads_id'=>$v['id'],'type'=>2));
                 $now = $this->getTodayConsume($client_id,$v['id']);
                 $ads[$k]['sum_consume'] = !empty($sum)?$sum[0]['sum_consume']:0;
                 $ads[$k]['sum_consume'] += $now;
                 $count += $ads[$k]['sum_consume'];
+                if(!isset($platform_pay_list[$v['third_platform']])) $platform_pay_list[$v['third_platform']]=0;
+                if(!isset($platform_count_list[$v['third_platform']])) $platform_count_list[$v['third_platform']]=0;
+                $platform_pay_list[$v['third_platform']] += $ads[$k]['sum_consume'];
             }
+            $data['platform_count_list'] = $platform_count_list;
+            $data['platform_pay_list'] = $platform_pay_list;
             $data['count'] = $count;
             $data['ads'] = $ads;
+            //var_dump($data);exit;
             $data['form']['client_id'] = $client_id;
             if($putdate){
                 $data['form']['putdate'] = $putdate;
@@ -333,6 +345,7 @@ class Admin extends Admin_Controller {
         redirect('c=admin&m=getFinanceList');
     }
 
+    //获取消耗总额
     public function getConsumeTotal(){
         $this->load->model('MConsume','',TRUE);
         $client_id = $this->input->get('client_id');

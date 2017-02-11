@@ -49,7 +49,7 @@
 
     <!-- Main -->
     <div id="main">
-        <iframe id="main-frame" name="main-frame" frameborder="0" src="<?php echo site_url('c=client&m=test');?>"></iframe>
+        <iframe id="main-frame" name="main-frame" frameborder="0" src="<?php echo site_url('c=client&m=advertismentInfo');?>"></iframe>
     </div>
     <!-- Main End -->
 
@@ -74,7 +74,7 @@ var menu_config = [
             {
                 text: "广告统计",
                 items: [],
-                href: "<?php echo site_url('c=client&m=test');?>"
+                href: "<?php echo site_url('c=client&m=advertismentInfo');?>"
             },
             {
                 text: "财务管理",

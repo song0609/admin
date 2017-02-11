@@ -21,20 +21,7 @@
         <div style="padding-top:10px;height: 60px">
             <form class="form-horizontal" role="form" style="display: inline" action='' method="get">
                 <div style="margin-left: 10px">
-                    <label>客户账户：</label>
-                    <select id="client_id" name="client_id">
-                        <?php
-                        echo "<option value='0' selected>选择客户</option>";
-                        foreach($clients as $k=>$v){
-                            if(isset($form['client_id']) && $form['client_id']==$v['id']){
-                                echo "<option value='{$v['id']}' selected>{$v['username']}</option>";
-                            }else{
-                                echo "<option value='{$v['id']}'>{$v['username']}</option>";
-                            }
-                        }
-                        ?>
-                    </select>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <input type="hidden" name="c" value="admin"/>
+                    <input type="hidden" name="c" value="client"/>
                     <input type="hidden" name="m" value="advertismentInfo"/>
                     <input type="text" class="Wdate" placeholder="请选择查询日期" size="30" value="<?php echo isset($form['putdate'])?$form['putdate']:'' ?>" name="putdate" onClick="WdatePicker({dateFmt:'yyyy-MM-dd'});"/>
                     <button type="submit" class="btn btn-primary btn-sm">查询</button>
@@ -54,7 +41,6 @@
                 <th>广告状态</th>
                 <th>效率折扣</th>
                 <th>该任务历史总消耗</th>
-                <th>余额</th>
             </tr>
             </thead>
             <tbody>
@@ -72,10 +58,6 @@
                         echo "<td>".$status."</td>";
                         echo "<td>{$value['discount']}</td>";
                         echo "<td>{$value['sum_consume']}￥</td>";
-                        //echo "<td>$platform_count_list[$value['third_platform']]}￥</td>";
-                        echo "<td>";
-                        echo $platform_count_list[$value['third_platform']]-$platform_pay_list[$value['third_platform']];
-                        echo "￥</td>";
                         echo "</tr>";
                     }
                 }
