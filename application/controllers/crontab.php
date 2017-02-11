@@ -72,6 +72,7 @@ class Crontab extends CI_Controller {
                 'consume'=>$cost,
                 'time'=>strtotime(date("Y-m-d"))-1,
                 'ads_id'=>$v['id'],
+                'type'=>2,
             );
             $this->MConsume->saveConsumeData($data);
         }

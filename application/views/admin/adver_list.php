@@ -38,7 +38,8 @@
                 echo "<tr>";
                 echo "<td>{$value['username']}</td>";
                 echo "<td>{$value['advertiser']}</td>";
-                echo '<td><label data-role="comsumeTotal" style="font-style: italic" text="查看消耗金额">查看消耗金额</label></td>';
+                //echo '<td><label data-role="comsumeTotal" style="font-style: italic" text="查看消耗金额">点击查看消耗金额</label></td>';
+                echo '<td><span id="client_'.$value['id'].'" data-role="comsumeTotal" title="'.$value['id'].'">点击查看金额</span></td>';
                 echo "<td>{$value['remain_count']}</td>";
                 echo "<td>";
                 if($value['status']==1){
@@ -118,10 +119,21 @@
     $('[data-role="comsumeTotal"]').on("click", function() {
 
         // To Do Something
-        var total = "1.00";//消耗金额查询
-        //this.text(total);
-        $(this).text(total);
-        //alert($("#comsumeTotal").text());
+        var total = "0￥";//消耗金额查询
+        var id = this.title;
+        //console.log(this.title);
+
+        $.ajax({
+            type: "GET",
+            url: "<?php echo site_url('c=admin&m=getConsumeTotal');?>",
+            data: "client_id="+id,
+            success: function(data){
+                var obj = eval( "(" + data + ")" );
+                if(obj.status==200){
+                    $("#client_"+id).text(obj.data+"￥");
+                }
+            }
+        });
     });
 
     //
