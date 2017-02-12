@@ -2,15 +2,15 @@
 Navicat MySQL Data Transfer
 
 Source Server         : localhost
-Source Server Version : 50612
+Source Server Version : 50524
 Source Host           : localhost:3306
 Source Database       : db_ci
 
 Target Server Type    : MYSQL
-Target Server Version : 50612
+Target Server Version : 50524
 File Encoding         : 65001
 
-Date: 2017-02-12 12:01:13
+Date: 2017-02-12 20:47:29
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -98,22 +98,24 @@ CREATE TABLE `tc_consume` (
   `time` int(11) NOT NULL DEFAULT '0' COMMENT '时间',
   `ads_id` int(11) NOT NULL DEFAULT '0' COMMENT '任务id',
   `type` tinyint(4) NOT NULL DEFAULT '1' COMMENT '消耗值类型：1为普通，2为当日最后消耗',
+  `discount` decimal(15,2) NOT NULL DEFAULT '1.00' COMMENT '当前折扣',
+  `real_consume` decimal(15,2) NOT NULL DEFAULT '0.00' COMMENT '乘以折扣后的真实消耗',
+  `stage` int(4) NOT NULL DEFAULT '0' COMMENT '分钟数阶段：0-15:1,15-30:2,30-45:3,45-59:4',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Records of tc_consume
 -- ----------------------------
-INSERT INTO `tc_consume` VALUES ('1', '1', '1', '6488.12', '1484993772', '1', '1');
-INSERT INTO `tc_consume` VALUES ('2', '1', '1', '6851.46', '1484995430', '1', '1');
-INSERT INTO `tc_consume` VALUES ('3', '1', '1', '6851.46', '1484995581', '1', '1');
-INSERT INTO `tc_consume` VALUES ('4', '1', '1', '7051.46', '1485014399', '1', '2');
-INSERT INTO `tc_consume` VALUES ('5', '1', '2', '1.00', '1484993772', '2', '1');
-INSERT INTO `tc_consume` VALUES ('6', '1', '2', '18.00', '1484995430', '2', '1');
-INSERT INTO `tc_consume` VALUES ('7', '1', '2', '25.00', '1484995581', '2', '1');
-INSERT INTO `tc_consume` VALUES ('8', '1', '2', '40.00', '1485014399', '2', '2');
-INSERT INTO `tc_consume` VALUES ('9', '1', '1', '12.00', '1486809126', '1', '1');
-INSERT INTO `tc_consume` VALUES ('10', '1', '1', '35.00', '1486809130', '1', '1');
+INSERT INTO `tc_consume` VALUES ('1', '1', '1', '6488.12', '1484931601', '1', '1', '1.00', '6488.12', '1');
+INSERT INTO `tc_consume` VALUES ('2', '1', '1', '6851.46', '1484932501', '1', '1', '1.00', '6851.46', '2');
+INSERT INTO `tc_consume` VALUES ('3', '1', '1', '6951.46', '1484935261', '1', '1', '1.00', '6951.46', '1');
+INSERT INTO `tc_consume` VALUES ('4', '1', '1', '7051.46', '1485014399', '1', '2', '1.00', '7051.46', '1');
+INSERT INTO `tc_consume` VALUES ('5', '1', '2', '1.00', '1484931601', '2', '1', '0.80', '0.80', '1');
+INSERT INTO `tc_consume` VALUES ('6', '1', '2', '18.00', '1484932501', '2', '1', '1.00', '18.00', '2');
+INSERT INTO `tc_consume` VALUES ('7', '1', '2', '25.00', '1484935261', '2', '1', '1.00', '25.00', '1');
+INSERT INTO `tc_consume` VALUES ('8', '1', '2', '40.00', '1485014399', '2', '2', '1.00', '40.00', '1');
+INSERT INTO `tc_consume` VALUES ('11', '1', '1', '455.00', '1485100799', '1', '2', '1.00', '415.00', '1');
 
 -- ----------------------------
 -- Table structure for tc_finance
@@ -125,18 +127,18 @@ CREATE TABLE `tc_finance` (
   `money` decimal(15,2) NOT NULL DEFAULT '0.00' COMMENT '金额',
   `time` int(10) NOT NULL DEFAULT '0' COMMENT '充值时间',
   `note` varchar(128) NOT NULL DEFAULT '' COMMENT '备注',
-  `third_platform` tinyint(4) NOT NULL DEFAULT '0' COMMENT '充值到的平台',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of tc_finance
 -- ----------------------------
-INSERT INTO `tc_finance` VALUES ('2', '2', '1000.00', '1484492541', '1w', '1');
-INSERT INTO `tc_finance` VALUES ('8', '1', '4.00', '1484985053', '4', '1');
-INSERT INTO `tc_finance` VALUES ('9', '1', '100.00', '1484985122', '100', '1');
-INSERT INTO `tc_finance` VALUES ('10', '1', '-10.00', '1484985143', '-10', '1');
-INSERT INTO `tc_finance` VALUES ('11', '1', '20000.00', '1486815236', '', '1');
+INSERT INTO `tc_finance` VALUES ('2', '2', '1000.00', '1484492541', '1w');
+INSERT INTO `tc_finance` VALUES ('8', '1', '4.00', '1484985053', '4');
+INSERT INTO `tc_finance` VALUES ('9', '1', '100.00', '1484985122', '100');
+INSERT INTO `tc_finance` VALUES ('10', '1', '-10.00', '1484985143', '-10');
+INSERT INTO `tc_finance` VALUES ('11', '1', '20000.00', '1486815236', '');
+INSERT INTO `tc_finance` VALUES ('12', '1', '1000.00', '1486873673', '1000');
 
 -- ----------------------------
 -- Table structure for tc_third_platform
@@ -144,7 +146,6 @@ INSERT INTO `tc_finance` VALUES ('11', '1', '20000.00', '1486815236', '', '1');
 DROP TABLE IF EXISTS `tc_third_platform`;
 CREATE TABLE `tc_third_platform` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
-  `third_platform` int(10) NOT NULL DEFAULT '0' COMMENT '第三方平台标识',
   `client_id` int(10) NOT NULL DEFAULT '0' COMMENT '客户id',
   `total_account` decimal(15,2) NOT NULL DEFAULT '0.00' COMMENT '用户在第三方平台充值总额',
   `pay_account` decimal(15,2) NOT NULL DEFAULT '0.00' COMMENT '历史消耗总额',
@@ -154,4 +155,4 @@ CREATE TABLE `tc_third_platform` (
 -- ----------------------------
 -- Records of tc_third_platform
 -- ----------------------------
-INSERT INTO `tc_third_platform` VALUES ('1', '1', '1', '20094.00', '0.00');
+INSERT INTO `tc_third_platform` VALUES ('1', '1', '21094.00', '0.00');

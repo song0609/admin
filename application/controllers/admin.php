@@ -230,6 +230,8 @@ class Admin extends Admin_Controller {
         $count=0;
         if($client_id){
             $ads = $this->MAdvertisment->getAdvertismentList(0,100,array('client_id'=>$client_id));
+            $total_count = $this->MThirdPlatform->getThirdPlatformList(0,1,array('client_id'=>$client_id));
+            $total_count = empty($total_count)?0:$total_count[0]['total_account'];
             foreach($ads as $k=>$v){
                 $sum = $this->MConsume->getCountConsume(array('client_id'=>$client_id,'ads_id'=>$v['id'],'type'=>2));
                 $now = $this->getTodayConsume($client_id,$v['id']);
@@ -237,6 +239,7 @@ class Admin extends Admin_Controller {
                 $ads[$k]['sum_consume'] += $now;
                 $count += $ads[$k]['sum_consume'];
             }
+            $data['total_count'] = $total_count;
             $data['count'] = $count;
             $data['ads'] = $ads;
             $data['form']['client_id'] = $client_id;
@@ -268,8 +271,16 @@ class Admin extends Admin_Controller {
                             $yAxis[$k] += $y;
                         }
                     }
+                    $y = array();
+                    for($i=0;$i<count($yAxis);$i++){
+                        if($i==0){
+                            $y[$i] = $yAxis[$i];
+                            continue;
+                        }
+                        $y[$i] = $yAxis[$i] - $yAxis[$i-1];
+                    }
                     $data['consume']['xAxis'] = json_encode($x_data[$ads_id[0]]);
-                    $data['consume']['yAxis'] = json_encode(array(array('data'=>$yAxis,'name'=>$putdate)));
+                    $data['consume']['yAxis'] = json_encode(array(array('data'=>$y,'name'=>$putdate)));
                 }
 
             }

@@ -41,7 +41,10 @@
                 </div>
             </form>
         </div>
-        <div><front color="red">账户消耗总额：<?php if(isset($count))echo $count.'￥'?></front></div>
+        <div>
+            <front color="red">账户消耗总额：<?php if(isset($count))echo $count.'￥'?></front>&nbsp;&nbsp;&nbsp;&nbsp;
+            <front color="red">账户余额：<?php if(isset($total_count))echo $total_count-$count.'￥'?></front>
+        </div>
         <table class="table table-hover table-striped" style="border:1px solid #D0D0D0">
             <thead>
             <tr>
