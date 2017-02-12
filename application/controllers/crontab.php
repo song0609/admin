@@ -13,6 +13,8 @@ class Crontab extends CI_Controller {
 
     public function jushaCrontab(){
         $time = time();
+        $min = date('i',$time);
+        $stage = $this->_calStage($min);
         echo "Crontab jushaCrontab start---".date('Y-m-d H:i:s',$time).PHP_EOL;
         $this->load->model(array('MAdvertisment','MConsume'),'',TRUE);
         $ads = $this->MAdvertisment->getAdvertismentList(0,10000,array('third_platform'=>self::$third_platforms['jusha']));
@@ -36,8 +38,11 @@ class Crontab extends CI_Controller {
                 'third_platform'=>self::$third_platforms['jusha'],
                 'client_id'=>$v['client_id'],
                 'consume'=>$cost,
-                'time'=>$time,
+                'time'=>strtotime(date('Y-m-d H:i',$time)),
                 'ads_id'=>$v['id'],
+                'discount'=>$v['discount'],
+                'real_consume'=>$cost*$v['discount'],
+                'stage'=>$stage,
             );
             $this->MConsume->saveConsumeData($data);
         }
@@ -73,6 +78,9 @@ class Crontab extends CI_Controller {
                 'time'=>strtotime(date("Y-m-d"))-1,
                 'ads_id'=>$v['id'],
                 'type'=>2,
+                'discount'=>$v['discount'],
+                'real_consume'=>$cost*$v['discount'],
+                'stage'=>1,
             );
             $this->MConsume->saveConsumeData($data);
         }
@@ -106,5 +114,18 @@ class Crontab extends CI_Controller {
         $rs = curl_exec($ch); //执行cURL抓取页面内容
         curl_close($ch);
         return $rs;
+    }
+
+    //判断分钟数的阶段0-15:1,15-30:2,30-45:3,45-59:4
+    private function _calStage($min){
+        if($min<15){
+            return 1;
+        }elseif($min<30){
+            return 2;
+        }elseif($min<45){
+            return 3;
+        }elseif($min>45){
+            return 4;
+        }
     }
 }

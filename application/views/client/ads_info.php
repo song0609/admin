@@ -18,46 +18,56 @@
     <div class="panel panel-default">
         <div class="panel-heading">广告统计</span>
         </div>
+        <!-- 统计图 -->
+        <?php if(!empty($consume)){?>
+            <div id="container" class="panel panel-default">
+            </div>
+        <?php }?>
+        <div>
+            <front color="red">账户消耗总额：<?php if(isset($count))echo $count.'￥'?></front>&nbsp;&nbsp;&nbsp;&nbsp;
+            <front color="red">账户余额：<?php echo $total_count-$count.'￥'?></front>
+        </div>
         <div style="padding-top:10px;height: 60px">
             <form class="form-horizontal" role="form" style="display: inline" action='' method="get">
-                <div style="margin-left: 10px">
+                <div style="margin-left: 1px">
                     <input type="hidden" name="c" value="client"/>
                     <input type="hidden" name="m" value="advertismentInfo"/>
-                    <input type="text" class="Wdate" placeholder="请选择查询日期" size="30" value="<?php echo isset($form['putdate'])?$form['putdate']:'' ?>" name="putdate" onClick="WdatePicker({dateFmt:'yyyy-MM-dd'});"/>
+                    任务：
+                    <select id="ads" name="ads">
+                        <?php
+                        echo "<option value='0'>全部</option>";
+                        foreach($ads as $v){
+                                if(isset($form['ads']) && $form['ads']==$v['id']){
+                                    echo "<option value='{$v['id']}' selected>{$v['ads_name']}</option>";
+                                }else{
+                                    echo "<option value='{$v['id']}'>{$v['ads_name']}</option>";
+                                }
+                            }
+                        ?>
+                    </select>
+                    日期：
+                    <input type="text" class="Wdate" placeholder="请选择开始日期" size="30" value="<?php echo isset($form['sdate'])?$form['sdate']:'' ?>" name="sdate" onClick="WdatePicker({dateFmt:'yyyy-MM-dd'});"/>&nbsp;到&nbsp;
+                    <input type="text" class="Wdate" placeholder="请选择结束日期" size="30" value="<?php echo isset($form['edate'])?$form['edate']:'' ?>" name="edate" onClick="WdatePicker({dateFmt:'yyyy-MM-dd'});"/>
                     <button type="submit" class="btn btn-primary btn-sm">查询</button>
+                    <font color="red"><?php echo isset($error)?$error:''; ?></font>
                 </div>
             </form>
         </div>
-        <div><front color="red">账户消耗总额：<?php if(isset($count))echo $count.'￥'?></front></div>
+
         <table class="table table-hover table-striped" style="border:1px solid #D0D0D0">
             <thead>
             <tr>
-                <th>广告任务名称</th>
-                <th>广告主名称</th>
-                <th>广告模式</th>
-                <th>投放平台</th>
-                <th>广告单价</th>
-                <th>广告地址</th>
-                <th>广告状态</th>
-                <th>效率折扣</th>
-                <th>该任务历史总消耗</th>
+                <th>日期</th>
+                <th>消耗</th>
             </tr>
             </thead>
             <tbody>
             <?php
-                if(!empty($ads)){
-                    foreach($ads as $value){
+                if(!empty($consume_list)){
+                    foreach($consume_list as $value){
                         echo "<tr>";
-                        echo "<td>{$value['ads_name']}</td>";
-                        echo "<td>{$clients[$value['client_id']]['username']}</td>";
-                        echo "<td>{$value['ads_type']}</td>";
-                        echo "<td>{$value['platform']}</td>";
-                        echo "<td>{$value['price']}</td>";
-                        echo "<td>{$value['ads_url']}</td>";
-                        $status = ($value['ads_status']=='0')?'暂停':'开启';
-                        echo "<td>".$status."</td>";
-                        echo "<td>{$value['discount']}</td>";
-                        echo "<td>{$value['sum_consume']}￥</td>";
+                        echo "<td>{$value['time']}</td>";
+                        echo "<td>{$value['real_consume']}￥</td>";
                         echo "</tr>";
                     }
                 }
@@ -66,10 +76,7 @@
         </table>
     </div>
     <!-- 列表 End -->
-    <?php if(!empty($consume)){?>
-        <div id="container" class="panel panel-default">
-        </div>
-    <?php }?>
+
 
 </div>
 

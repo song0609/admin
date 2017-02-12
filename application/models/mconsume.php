@@ -28,6 +28,9 @@ class MConsume extends CI_Model{
         if(!empty($opts['etime'])){
             $this->db->where('time <=',$opts['etime']);
         }
+        if(!empty($opts['stage'])){
+            $this->db->where('stage',$opts['stage']);
+        }
         $this->db->from('consume');
         if(!$order){
             $this->db->order_by('time', 'ASC');

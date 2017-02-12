@@ -56,6 +56,12 @@ class Login extends CI_Controller{
                     $query = $this->MAdmin->getAdminByUsername($data ['user']);
                 }else{
                     $query = $this->MClient->getClientByUsername($data ['user']);
+                    if($query && $query[0]['status']==0){
+                        echo "<script>alert('用户已暂停使用，请联系管理员!');</script>";
+                        //$arr['redirect'] = $redirect;
+                        $this->load->view("client/login");
+                        return;
+                    }
                 }
                 if(!$query){
                     echo "<script>alert('用户不存在!');</script>";
@@ -73,7 +79,7 @@ class Login extends CI_Controller{
                             redirect('c='.$route[0].'&m='.$route[1]);
                         }else{
                             $r = ($type == 1)? 'c=admin&m=index': 'c=client&m=index';
-                            redirect('c=admin&m=index');
+                            redirect($r);
                         }
                     }else{
                         echo "<script>alert('密码错误!');</script>";

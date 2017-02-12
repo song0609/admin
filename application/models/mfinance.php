@@ -45,7 +45,7 @@ class MFinance extends CI_Model{
         );
         $p_data = array(
             'client_id'=>$data['client_id'],
-            'third_platform'=>$data['third_platform'],
+            //'third_platform'=>$data['third_platform'],
             'total_account'=>$data['money'],
         );
         $record = $this->MThirdPlatform->getThirdPlatformList(0,1,$opts);

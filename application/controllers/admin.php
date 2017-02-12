@@ -150,7 +150,7 @@ class Admin extends Admin_Controller {
         $this->load->model(array('MAdvertisment','MClient'),'',TRUE);
         $page = $this->input->get('per_page');
         $page = !empty($page)?$page:1;
-        $total = $this->MAdvertisment->getTotalCount(1);
+        $total = $this->MAdvertisment->getTotalCount();
         $pagesize = 10;
         $offset = $pagesize*($page-1);
         $data = $this->MAdvertisment->getAdvertismentList($offset,$pagesize);
@@ -230,27 +230,15 @@ class Admin extends Admin_Controller {
         $count=0;
         if($client_id){
             $ads = $this->MAdvertisment->getAdvertismentList(0,100,array('client_id'=>$client_id));
-            $finance_count = $this->MThirdPlatform->getThirdPlatformList(0,10000,array('client_id'=>$client_id));
-            $platform_count_list = array();
-            $platform_pay_list = array();
-            foreach($finance_count as $v){
-                $platform_count_list[$v['third_platform']] = $v['total_account'];//每个平台充值总额
-            }
             foreach($ads as $k=>$v){
                 $sum = $this->MConsume->getCountConsume(array('client_id'=>$client_id,'ads_id'=>$v['id'],'type'=>2));
                 $now = $this->getTodayConsume($client_id,$v['id']);
                 $ads[$k]['sum_consume'] = !empty($sum)?$sum[0]['sum_consume']:0;
                 $ads[$k]['sum_consume'] += $now;
                 $count += $ads[$k]['sum_consume'];
-                if(!isset($platform_pay_list[$v['third_platform']])) $platform_pay_list[$v['third_platform']]=0;
-                if(!isset($platform_count_list[$v['third_platform']])) $platform_count_list[$v['third_platform']]=0;
-                $platform_pay_list[$v['third_platform']] += $ads[$k]['sum_consume'];
             }
-            $data['platform_count_list'] = $platform_count_list;
-            $data['platform_pay_list'] = $platform_pay_list;
             $data['count'] = $count;
             $data['ads'] = $ads;
-            //var_dump($data);exit;
             $data['form']['client_id'] = $client_id;
             if($putdate){
                 $data['form']['putdate'] = $putdate;
@@ -315,14 +303,14 @@ class Admin extends Admin_Controller {
         $this->load->model(array('MClient'),'',TRUE);
         $clients = $this->MClient->getAdvertiserList(0,100);
         $data['clients'] = $clients;
-        $data['platforms'] = self::$third_platforms;
+        //$data['platforms'] = self::$third_platforms;
         $this->load->view('admin/finance_form',$data);
     }
 
     public function saveFinance(){
         $this->load->model('MFinance','',TRUE);
         $vo = array();
-        $param = array('client_id','note','money','third_platform');
+        $param = array('client_id','note','money');
         $param_data = array();
         foreach($param as $v){
             $param_data[$v] = $this->security->xss_clean($this->input->post($v));
@@ -330,7 +318,7 @@ class Admin extends Admin_Controller {
         $param_data['time'] = time();
         $form = $param_data;
         if(empty($param_data['money'])){
-            $errors['money'] = "账号密码为必填";
+            $errors['money'] = "充值金额为必填";
             $this->load->model(array('MClient'),'',TRUE);
             $clients = $this->MClient->getAdvertiserList(0,100);
             $data['clients'] = $clients;

@@ -19,69 +19,104 @@ class Client extends Client_Controller {
 
     public function advertismentInfo(){
         $data = array();
-        $this->load->model(array('MAdvertisment','MClient','MConsume'),'',TRUE);
+        $this->load->model(array('MAdvertisment','MClient','MConsume','MThirdPlatform'),'',TRUE);
         $client_name = $this ->session->userdata('username');
         $client = $this->MClient->getClientByUsername($client_name);
         $client_id = $client[0]['id'];
-        //$client_id = $this->input->get('client_id');
-        $putdate = $this->input->get('putdate');
-        $clients = $this->MClient->getAdvertiserList(0,100);
-        $data['clients'] = $clients;
-        $count=0;
+        $sdate = $this->input->get('sdate');
+        $edate = $this->input->get('edate');
+        $aid = $this->input->get('ads');
+        $count=0;  //总消耗
+        $ads_info = array();
+        $consume_list = array();
         if($client_id){
             $ads = $this->MAdvertisment->getAdvertismentList(0,100,array('client_id'=>$client_id));
+            $total_count = $this->MThirdPlatform->getThirdPlatformList(0,1,array('client_id'=>$client_id));
+            $total_count = empty($total_count)?0:$total_count[0]['total_account'];
             foreach($ads as $k=>$v){
                 $sum = $this->MConsume->getCountConsume(array('client_id'=>$client_id,'ads_id'=>$v['id'],'type'=>2));
                 $now = $this->getTodayConsume($client_id,$v['id']);
                 $ads[$k]['sum_consume'] = !empty($sum)?$sum[0]['sum_consume']:0;
-                $ads[$k]['sum_consume'] += $now;
+                $ads[$k]['sum_consume'] += $now;//每条任务的消耗
                 $count += $ads[$k]['sum_consume'];
+                $ads_info[$v['id']] = $v;
             }
             $data['count'] = $count;
             $data['ads'] = $ads;
-            $data['form']['client_id'] = $client_id;
-            if($putdate){
-                $data['form']['putdate'] = $putdate;
-                $opts = array(
-                    'stime'=>strtotime($putdate),
-                    'etime'=>strtotime($putdate)+3600*24-1,
-                    'client_id'=>$client_id,
-                );
-                $y_data = array();
-                $yAxis = array();
-                $x_data = array();
-                $ads_id = array();
-                $consumes = $this->MConsume->getConsumeData($opts);
-                if($consumes){
-                    foreach($consumes as $k=>$v){
-                        $y_data[$v['ads_id']][] = floatval($v['consume']);
-                        $x_data[$v['ads_id']][] = date('Y-m-d H:i',$v['time']);
-                        if(!in_array($v['ads_id'],$ads_id)){
-                            $ads_id[] = $v['ads_id'];
-                        }
-                    }
-                    for($i=0;$i<count($x_data[$ads_id[0]]);$i++){
-                        $yAxis[$i]=0;
-                    }
-                    //var_dump($y_data);exit;
-                    $y = array();
-                    foreach($ads_id as $id){
-                        /*foreach($y_data[$id] as $k=>$y){
-                            $yAxis[$k] += $y;
-                        }*/
-                        $y[] = array(
-                            'data'=>$y_data[$id],
-                            'name'=>$id,
-                        );
-                    }
-                    $data['consume']['xAxis'] = json_encode($x_data[$ads_id[0]]);
-                    //$data['consume']['yAxis'] = json_encode(array(array('data'=>$yAxis,'name'=>$putdate)));
-                    $data['consume']['yAxis'] = json_encode($y);
-                    //var_dump($data['consume']['yAxis']);exit;
-                }
-
-            }
+            $data['form']['ads'] = $aid;
+            $data['form']['sdate'] = $sdate;
+            $data['form']['edate'] = $edate;
         }
+        //$today = $this->getHistoryDayConsume(date('Y-m-d'),$client_id,1);
+        $today = $this->getHistoryDayConsume('2017-01-21',$client_id,1);
+        //$lastday = $this->getHistoryDayConsume(date("Y-m-d",strtotime("-1 day")),$client_id,1);
+        $lastday = $this->getHistoryDayConsume('2017-01-21',$client_id,1);
+        $xAxis = array();
+        if(!empty($today)){
+            $xAxis = $today['xAxis'];
+            $y = array();
+            for($i=0;$i<count($today['yAxis']);$i++){
+                if($i==0){
+                    $y[$i] =$today['yAxis'][$i];
+                    continue;
+                }
+                $y[$i] = $today['yAxis'][$i] - $today['yAxis'][$i-1];
+            }
+            $yAxis[] = array(
+                'data'=> $y,
+                'name' => date('Y-m-d'),
+            );
+        }
+        if(!empty($lastday)){
+            count($xAxis)<count($lastday['xAxis'])?$xAxis = $lastday['xAxis']:'';
+            $y = array();
+            for($i=0;$i<count($lastday['yAxis']);$i++){
+                if($i==0){
+                    $y[$i] =$lastday['yAxis'][$i];
+                    continue;
+                }
+                $y[$i] = $lastday['yAxis'][$i] - $lastday['yAxis'][$i-1];
+            }
+            $yAxis[] = array(
+                'data'=> $y,
+                'name' => date("Y-m-d",strtotime("-1 day")),
+            );
+        }
+        if(!empty($sdate)&&!empty($edate)){
+            if($edate<$sdate){
+                $data['error'] = '结束日期大于开始日期';
+            }else{
+                $stime = strtotime($sdate);
+                $etime = strtotime($edate)+3300*24-1;
+                $opt = array(
+                    'client_id'=>$client_id,
+                    'type'=>2,
+                    'stime'=>$stime,
+                    'etime'=>$etime,
+                );
+                if($aid){ //查某条任务
+                    $opt['ads_id'] = $aid;
+                    $consume_list = $this->MConsume->getConsumeData($opt);
+                    foreach($consume_list as $k=>$v){
+                        $consume_list[$k]['time'] = date('Y-m-d',$v['time']);
+                    }
+                }else{
+                    $list = $this->MConsume->getConsumeData($opt);
+                    $consume_list = array();
+                    foreach($list as $v){
+                        $date = date('Y-m-d',$v['time']);
+                        if(!isset($consume_list[$date]))$consume_list[$date]['real_consume']=0;
+                        $consume_list[$date]['real_consume'] += $v['real_consume'];
+                        $consume_list[$date]['time'] = $date;
+                    }
+                }
+            }
+
+        }
+        $data['consume_list'] = $consume_list;
+        $data['total_count'] = $total_count;
+        $data['consume']['xAxis'] = json_encode($xAxis);
+        $data['consume']['yAxis'] = json_encode($yAxis);
         $this->load->view('client/ads_info',$data);
     }
 
@@ -186,5 +221,86 @@ class Client extends Client_Controller {
             }
         }
         return 0;
+    }
+
+    public function getAdvertismentList(){
+        $this->load->helper('page');
+        $this->load->model(array('MAdvertisment','MClient','MConsume'),'',TRUE);
+        $page = $this->input->get('per_page');
+        $page = !empty($page)?$page:1;
+        $client_name = $this ->session->userdata('username');
+        $client = $this->MClient->getClientByUsername($client_name);
+        $client_id = $client[0]['id'];
+        $total = $this->MAdvertisment->getTotalCount(array('client_id'=>$client_id));
+        $pagesize = 10;
+        $offset = $pagesize*($page-1);
+        $ads = $this->MAdvertisment->getAdvertismentList($offset,$pagesize,array('client_id'=>$client_id));
+        //$count = 0;
+        /*foreach($ads as $k=>$v){
+            $sum = $this->MConsume->getCountConsume(array('client_id'=>$client_id,'ads_id'=>$v['id'],'type'=>2));
+            $now = $this->getTodayConsume($client_id,$v['id']);
+            $ads[$k]['sum_consume'] = !empty($sum)?$sum[0]['sum_consume']:0;
+            $ads[$k]['sum_consume'] += $now;//每条任务的消耗
+            //$count += $ads[$k]['sum_consume'];
+        }*/
+        $arr['data'] = $ads;
+        $arr['pagination'] = pagination(site_url("c=client&m=getAdvertismentList"),$pagesize,$total);
+        $arr['total'] = $total;
+        $this->load->view('client/ads_list',$arr);
+    }
+
+
+    public function test(){
+        $data = $this->getHistoryDayConsume('2017-01-21',1,1);
+        echo json_encode($data);exit;
+    }
+    /**
+     * 获取过去某一天的消耗明细(今天除外)
+     * @param $day 2017-02-12
+     * @param $client_id
+     * @param int $ads_id
+     */
+    private function getHistoryDayConsume($day,$client_id,$stage=0,$ads_id=0){
+        $this->load->model(array('MConsume'),'',TRUE);
+        $opts = array(
+            'stime'=>strtotime($day),
+            'etime'=>strtotime($day)+3600*24-1,
+            'client_id'=>$client_id,
+            'stage'=>$stage,
+        );
+        $data = array();
+        $y_data = array();//每个任务的y轴数据
+        $yAxis = array();//y轴
+        $x_data = array();//x轴
+        $ads_id = array();
+        $consumes = $this->MConsume->getConsumeData($opts);
+        if($consumes){
+            foreach($consumes as $k=>$v){
+                $y_data[$v['ads_id']][] = $v['real_consume'];
+                $x_data[$v['ads_id']][] = date('H:i',$v['time']);
+                if(!in_array($v['ads_id'],$ads_id)){
+                    $ads_id[] = $v['ads_id'];
+                }
+            }
+            $max_x = 0;
+            $max_x_ads = 0;
+            foreach($ads_id as $v){
+                if(count($x_data[$v])>$max_x) {
+                    $max_x=count($x_data[$v]); //维度最多的任务为x轴
+                    $max_x_ads = $v;
+                }
+            }
+            for($i=0;$i<$max_x;$i++){
+                $yAxis[$i]=0;
+            }
+            foreach($ads_id as $id){
+                foreach($y_data[$id] as $k=>$y){
+                    $yAxis[$k] += $y;
+                }
+            }
+            $data['xAxis'] = $x_data[$max_x_ads];
+            $data['yAxis'] = $yAxis;
+        }
+        return $data;
     }
 }

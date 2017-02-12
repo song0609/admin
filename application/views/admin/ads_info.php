@@ -54,7 +54,6 @@
                 <th>广告状态</th>
                 <th>效率折扣</th>
                 <th>该任务历史总消耗</th>
-                <th>余额</th>
             </tr>
             </thead>
             <tbody>
@@ -72,10 +71,6 @@
                         echo "<td>".$status."</td>";
                         echo "<td>{$value['discount']}</td>";
                         echo "<td>{$value['sum_consume']}￥</td>";
-                        //echo "<td>$platform_count_list[$value['third_platform']]}￥</td>";
-                        echo "<td>";
-                        echo $platform_count_list[$value['third_platform']]-$platform_pay_list[$value['third_platform']];
-                        echo "￥</td>";
                         echo "</tr>";
                     }
                 }

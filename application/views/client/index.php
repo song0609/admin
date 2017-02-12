@@ -77,6 +77,11 @@ var menu_config = [
                 href: "<?php echo site_url('c=client&m=advertismentInfo');?>"
             },
             {
+                text: "广告管理",
+                items: [],
+                href: "<?php echo site_url('c=client&m=getAdvertismentList');?>"
+            },
+            {
                 text: "财务管理",
                 items: [],
                 href: "<?php echo site_url('c=client&m=getFinanceList');?>"

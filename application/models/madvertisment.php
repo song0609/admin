@@ -11,8 +11,11 @@ class MAdvertisment extends CI_Model{
     }
 
 
-    public function getTotalCount(){
+    public function getTotalCount($opts=array()){
         $query = $this->db->get_where('advertisment', array());
+        if(!empty($opts['client_id'])){
+            $this->db->where('client_id',$opts['client_id']);
+        }
         return $query->num_rows();
     }
 

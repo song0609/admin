@@ -59,22 +59,22 @@
                         <font color="red"><?php echo isset($errors)?$errors['money']:''; ?></font>
                     </div>
                 </div>
-                <div class="row gap">
+<!--                <div class="row gap">
                     <label class="col-sm-2 control-label"><span class="required">*</span> 第三方平台</label>
                     <div class="col-sm-10">
                         <select id="third_platform" name="third_platform">
                             <?php
-                            foreach($platforms as $k=>$v){
+/*                            foreach($platforms as $k=>$v){
                                 if(isset($form['third_platform']) && $form['third_platform']==$k){
                                     echo "<option value='{$k}' selected>{$v}</option>";
                                 }else{
                                     echo "<option value='{$k}' selected>{$v}</option>";
                                 }
                             }
-                            ?>
+                            */?>
                         </select>
                     </div>
-                </div>
+                </div>-->
                 <div class="row gap">
                     <label class="col-sm-2 control-label"> 备注</label>
                     <div class="col-sm-8">
