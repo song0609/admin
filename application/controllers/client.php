@@ -47,11 +47,12 @@ class Client extends Client_Controller {
             $data['form']['sdate'] = $sdate;
             $data['form']['edate'] = $edate;
         }
-        //$today = $this->getHistoryDayConsume(date('Y-m-d'),$client_id,1);
-        $today = $this->getHistoryDayConsume('2017-01-21',$client_id,1);
-        //$lastday = $this->getHistoryDayConsume(date("Y-m-d",strtotime("-1 day")),$client_id,1);
-        $lastday = $this->getHistoryDayConsume('2017-01-21',$client_id,1);
+        $today = $this->getHistoryDayConsume(date('Y-m-d'),$client_id,1);
+        //$today = $this->getHistoryDayConsume('2017-01-21',$client_id,1);
+        $lastday = $this->getHistoryDayConsume(date("Y-m-d",strtotime("-1 day")),$client_id,1);
+        //$lastday = $this->getHistoryDayConsume('2017-01-21',$client_id,1);
         $xAxis = array();
+        $yAxis = array();
         if(!empty($today)){
             $xAxis = $today['xAxis'];
             $y = array();

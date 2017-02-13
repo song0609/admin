@@ -124,8 +124,9 @@ class Crontab extends CI_Controller {
             return 2;
         }elseif($min<45){
             return 3;
-        }elseif($min>45){
+        }elseif($min>=45){
             return 4;
         }
+        return 0;
     }
 }
