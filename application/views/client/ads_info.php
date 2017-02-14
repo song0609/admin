@@ -25,7 +25,7 @@
         <?php }?>
         <div>
             <front color="red">账户消耗总额：<?php if(isset($count))echo $count.'￥'?></front>&nbsp;&nbsp;&nbsp;&nbsp;
-            <front color="red">账户余额：<?php echo $total_count-$count.'￥'?></front>
+            <front color="red">账户余额：<?php echo round($total_count-$count,2).'￥'?></front>
         </div>
         <div style="padding-top:10px;height: 60px">
             <form class="form-horizontal" role="form" style="display: inline" action='' method="get">
