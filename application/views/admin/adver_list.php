@@ -130,7 +130,7 @@
             success: function(data){
                 var obj = eval( "(" + data + ")" );
                 if(obj.status==200){
-                    $("#client_"+id).text(obj.data+"￥");
+                    $("#client_"+id).text(obj.consume+"￥");
                 }
             }
         });

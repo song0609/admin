@@ -95,11 +95,6 @@ var menu_config = [
                 text: "管理员账户管理",
                 items: [
                     {
-                        text: "新增管理员",
-                        items: [],
-                        href: "<?php echo site_url('c=admin&m=addadmin');?>"
-                    },
-                    {
                         text: "修改密码",
                         items: [],
                         href: "<?php echo site_url('c=admin&m=password');?>"
