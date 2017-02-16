@@ -40,7 +40,8 @@
                 echo "<td>{$value['advertiser']}</td>";
                 //echo '<td><label data-role="comsumeTotal" style="font-style: italic" text="查看消耗金额">点击查看消耗金额</label></td>';
                 echo '<td><span id="client_'.$value['id'].'" data-role="comsumeTotal" title="'.$value['id'].'">点击查看金额</span></td>';
-                echo "<td>{$value['remain_count']}</td>";
+                echo '<td><span id="yuer_client_'.$value['id'].'" data-role="comsumeTotal" title="'.$value['id'].'">点击查看金额</span></td>';
+               // echo "<td>{$value['remain_count']}</td>";
                 echo "<td>";
                 if($value['status']==1){
                     echo "<input type='checkbox' class='mySwitch' name='switch' checked data-size='large' data-on-text='开通' data-off-text='关闭' value='{$value['id']}'>&nbsp;";
@@ -131,6 +132,7 @@
                 var obj = eval( "(" + data + ")" );
                 if(obj.status==200){
                     $("#client_"+id).text(obj.consume+"￥");
+                    $("#yuer_client_"+id).text(obj.total_count+"￥");
                 }
             }
         });

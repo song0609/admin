@@ -328,7 +328,7 @@ class Admin extends Admin_Controller {
 
     //获取消耗总额
     public function getConsumeTotal(){
-        $this->load->model('MConsume','',TRUE);
+        $this->load->model(array('MConsume','MThirdPlatform'),'',TRUE);
         $client_id = $this->input->get('client_id');
         if($client_id){
             $res = 0;
@@ -336,8 +336,9 @@ class Admin extends Admin_Controller {
             $total_count = empty($total_count)?0:$total_count[0]['total_account'];
             $total = $this->MConsume->getCountConsume(array('client_id'=>$client_id,'type'=>2));
             $now = $this->getTodayConsume($client_id);
-            !empty($total[0]['sum_consume'])?$res = $total[0]['sum_consume']:"";
+            !empty($total[0]['sum_consume'])?$res = $total[0]['sum_consume']:0;
             $res += $now;
+            $total_count = round($total_count-$res,2);
             echo json_encode(array('status'=>200,'consume'=>$res,'total_count'=>$total_count));
             exit;
         }
