@@ -2,15 +2,15 @@
 Navicat MySQL Data Transfer
 
 Source Server         : localhost
-Source Server Version : 50524
+Source Server Version : 50612
 Source Host           : localhost:3306
 Source Database       : db_ci
 
 Target Server Type    : MYSQL
-Target Server Version : 50524
+Target Server Version : 50612
 File Encoding         : 65001
 
-Date: 2017-02-12 20:47:29
+Date: 2017-02-27 22:05:42
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -101,21 +101,24 @@ CREATE TABLE `tc_consume` (
   `discount` decimal(15,2) NOT NULL DEFAULT '1.00' COMMENT '当前折扣',
   `real_consume` decimal(15,2) NOT NULL DEFAULT '0.00' COMMENT '乘以折扣后的真实消耗',
   `stage` int(4) NOT NULL DEFAULT '0' COMMENT '分钟数阶段：0-15:1,15-30:2,30-45:3,45-59:4',
+  `pv` bigint(20) NOT NULL DEFAULT '0' COMMENT 'pv',
+  `click` bigint(20) NOT NULL DEFAULT '0' COMMENT '点击数',
+  `effective` bigint(20) NOT NULL DEFAULT '0' COMMENT '计费次数',
+  `click_rate` varchar(10) CHARACTER SET utf8 NOT NULL COMMENT '点击率',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Records of tc_consume
 -- ----------------------------
-INSERT INTO `tc_consume` VALUES ('1', '1', '1', '6488.12', '1484931601', '1', '1', '1.00', '6488.12', '1');
-INSERT INTO `tc_consume` VALUES ('2', '1', '1', '6851.46', '1484932501', '1', '1', '1.00', '6851.46', '2');
-INSERT INTO `tc_consume` VALUES ('3', '1', '1', '6951.46', '1484935261', '1', '1', '1.00', '6951.46', '1');
-INSERT INTO `tc_consume` VALUES ('4', '1', '1', '7051.46', '1485014399', '1', '2', '1.00', '7051.46', '1');
-INSERT INTO `tc_consume` VALUES ('5', '1', '2', '1.00', '1484931601', '2', '1', '0.80', '0.80', '1');
-INSERT INTO `tc_consume` VALUES ('6', '1', '2', '18.00', '1484932501', '2', '1', '1.00', '18.00', '2');
-INSERT INTO `tc_consume` VALUES ('7', '1', '2', '25.00', '1484935261', '2', '1', '1.00', '25.00', '1');
-INSERT INTO `tc_consume` VALUES ('8', '1', '2', '40.00', '1485014399', '2', '2', '1.00', '40.00', '1');
-INSERT INTO `tc_consume` VALUES ('11', '1', '1', '455.00', '1485100799', '1', '2', '1.00', '415.00', '1');
+INSERT INTO `tc_consume` VALUES ('1', '1', '1', '6488.12', '1484931601', '1', '1', '1.00', '6488.12', '1', '0', '0', '0', '');
+INSERT INTO `tc_consume` VALUES ('2', '1', '1', '6851.46', '1484932501', '1', '1', '1.00', '6851.46', '2', '0', '0', '0', '');
+INSERT INTO `tc_consume` VALUES ('3', '1', '1', '6951.46', '1484935261', '1', '1', '1.00', '6951.46', '1', '0', '0', '0', '');
+INSERT INTO `tc_consume` VALUES ('4', '1', '1', '7051.46', '1485014399', '1', '2', '1.00', '7051.46', '1', '0', '0', '0', '');
+INSERT INTO `tc_consume` VALUES ('5', '1', '2', '1.00', '1484931601', '2', '1', '0.80', '0.80', '1', '0', '0', '0', '');
+INSERT INTO `tc_consume` VALUES ('6', '1', '2', '18.00', '1484932501', '2', '1', '1.00', '18.00', '2', '0', '0', '0', '');
+INSERT INTO `tc_consume` VALUES ('7', '1', '2', '25.00', '1484935261', '2', '1', '1.00', '25.00', '1', '0', '0', '0', '');
+INSERT INTO `tc_consume` VALUES ('8', '1', '2', '40.00', '1485014399', '2', '2', '1.00', '40.00', '1', '0', '0', '0', '');
 
 -- ----------------------------
 -- Table structure for tc_finance
