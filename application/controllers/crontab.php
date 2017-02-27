@@ -140,7 +140,8 @@ class Crontab extends CI_Controller {
         echo "Crontab jushaCrontabNew start---".date('Y-m-d H:i:s',$time).PHP_EOL;
         $this->load->model(array('MAdvertisment','MConsume'),'',TRUE);
         $ads = $this->MAdvertisment->getAdvertismentList(0,10000,array('third_platform'=>self::$third_platforms['jusha']));
-        $api_url = "https://www.jusha.com/client/xxx.php";
+        $api_url = "http://localhost/test.php";
+        //$api_url = "https://www.jusha.com/client/xxx.php";
         $date = date('Y-m-d',time());
         $ads_arr = array();
         foreach($ads as $v){
@@ -154,16 +155,17 @@ class Crontab extends CI_Controller {
         $edate = $date;
         $ads_str = implode(",",$ads_arr);
         $sign = md5($sdate.$edate.$ads_str);
-        $api_url .= "?advid=".$ads_arr."&sdate=".$sdate."&edate=".$edate."&sign=".$sign;
+        $api_url .= "?advid=".$ads_str."&sdate=".$sdate."&edate=".$edate."&sign=".$sign;
         $res = $this->get_content($api_url, null);
         $res = json_decode($res,true);
-        if($res['code'] == 0){
+
+        if($res['code'] != 0){
             echo "jusha api error:".$res['msg'].PHP_EOL;
             return;
         }
         $res_data = $res['data'][$date];
         foreach($ads as $v){
-            $jusha_data = empty($res_data[$ads['id']])?array():$res_data[$ads['id']];
+            $jusha_data = empty($res_data[$v['id']])?array():$res_data[$v['id']];
             $data = array(
                 'third_platform'=>self::$third_platforms['jusha'],
                 'client_id'=>$v['client_id'],
@@ -202,16 +204,16 @@ class Crontab extends CI_Controller {
         $edate = $date;
         $ads_str = implode(",",$ads_arr);
         $sign = md5($sdate.$edate.$ads_str);
-        $api_url .= "?advid=".$ads_arr."&sdate=".$sdate."&edate=".$edate."&sign=".$sign;
+        $api_url .= "?advid=".$ads_str."&sdate=".$sdate."&edate=".$edate."&sign=".$sign;
         $res = $this->get_content($api_url, null);
         $res = json_decode($res,true);
-        if($res['code'] == 0){
+        if($res['code'] != 0){
             echo "jusha api error:".$res['msg'].PHP_EOL;
             return;
         }
         $res_data = $res['data'][$date];
         foreach($ads as $v){
-            $jusha_data = empty($res_data[$ads['id']])?array():$res_data[$ads['id']];
+            $jusha_data = empty($res_data[$v['id']])?array():$res_data[$v['id']];
             $data = array(
                 'third_platform'=>self::$third_platforms['jusha'],
                 'client_id'=>$v['client_id'],
