@@ -7,6 +7,7 @@
  */
 class Crontab extends CI_Controller {
 
+    public static $jusha_key = "37e531a64edde7eb424c33ec16522a4a";
     public static $third_platforms = array(
         'jusha'=>1,
     );
@@ -104,13 +105,15 @@ class Crontab extends CI_Controller {
 
 
     //登录成功后获取数据
-    public function get_content($url, $cookie) {
+    public function get_content($url, $cookie=null) {
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
         curl_setopt($ch, CURLOPT_HEADER, 0);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($ch, CURLOPT_COOKIEFILE, $cookie); //读取cookie
+        if($cookie){
+            curl_setopt($ch, CURLOPT_COOKIEFILE, $cookie); //读取cookie
+        }
         $rs = curl_exec($ch); //执行cURL抓取页面内容
         curl_close($ch);
         return $rs;
@@ -128,5 +131,104 @@ class Crontab extends CI_Controller {
             return 4;
         }
         return 0;
+    }
+
+    public function jushaCrontabNew(){
+        $time = time();
+        $min = date('i',$time);
+        $stage = $this->_calStage($min);
+        echo "Crontab jushaCrontabNew start---".date('Y-m-d H:i:s',$time).PHP_EOL;
+        $this->load->model(array('MAdvertisment','MConsume'),'',TRUE);
+        $ads = $this->MAdvertisment->getAdvertismentList(0,10000,array('third_platform'=>self::$third_platforms['jusha']));
+        $api_url = "https://www.jusha.com/client/xxx.php";
+        $date = date('Y-m-d',time());
+        $ads_arr = array();
+        foreach($ads as $v){
+            $ads_arr[] = $v['id'];
+        }
+        if(empty($ads_arr)){
+            echo "no ads deal with".PHP_EOL;
+            return;
+        }
+        $sdate = $date;
+        $edate = $date;
+        $ads_str = implode(",",$ads_arr);
+        $sign = md5($sdate.$edate.$ads_str);
+        $api_url .= "?advid=".$ads_arr."&sdate=".$sdate."&edate=".$edate."&sign=".$sign;
+        $res = $this->get_content($api_url, null);
+        $res = json_decode($res,true);
+        if($res['code'] == 0){
+            echo "jusha api error:".$res['msg'].PHP_EOL;
+            return;
+        }
+        $res_data = $res['data'][$date];
+        foreach($ads as $v){
+            $jusha_data = empty($res_data[$ads['id']])?array():$res_data[$ads['id']];
+            $data = array(
+                'third_platform'=>self::$third_platforms['jusha'],
+                'client_id'=>$v['client_id'],
+                'consume'=>empty($jusha_data)?0:$jusha_data['Money'],
+                'time'=>strtotime(date('Y-m-d H:i',$time)),
+                'ads_id'=>$v['id'],
+                'discount'=>$v['discount'],
+                'real_consume'=>empty($jusha_data)?0:$jusha_data['Money']*$v['discount'],
+                'stage'=>$stage,
+                'pv'=>empty($jusha_data)?0:$jusha_data['Pv'],
+                'click'=>empty($jusha_data)?0:$jusha_data['Click'],
+                'effective'=>empty($jusha_data)?0:$jusha_data['Effective'],
+                'click_rate'=>empty($jusha_data)?0:$jusha_data['Click_Rate'],
+            );
+            $this->MConsume->saveConsumeData($data);
+        }
+        echo "Crontab jushaCrontabNew end---".date('Y-m-d H:i:s',time()).PHP_EOL;
+    }
+
+    public function jushaCrontabNew2(){
+        $time = time();
+        echo "Crontab jushaCrontabNew2 start---".date('Y-m-d H:i:s',$time).PHP_EOL;
+        $this->load->model(array('MAdvertisment','MConsume'),'',TRUE);
+        $ads = $this->MAdvertisment->getAdvertismentList(0,10000,array('third_platform'=>self::$third_platforms['jusha']));
+        $api_url = "https://www.jusha.com/client/xxx.php";
+        $date = date("Y-m-d",strtotime("-1 day"));
+        $ads_arr = array();
+        foreach($ads as $v){
+            $ads_arr[] = $v['id'];
+        }
+        if(empty($ads_arr)){
+            echo "no ads deal with".PHP_EOL;
+            return;
+        }
+        $sdate = $date;
+        $edate = $date;
+        $ads_str = implode(",",$ads_arr);
+        $sign = md5($sdate.$edate.$ads_str);
+        $api_url .= "?advid=".$ads_arr."&sdate=".$sdate."&edate=".$edate."&sign=".$sign;
+        $res = $this->get_content($api_url, null);
+        $res = json_decode($res,true);
+        if($res['code'] == 0){
+            echo "jusha api error:".$res['msg'].PHP_EOL;
+            return;
+        }
+        $res_data = $res['data'][$date];
+        foreach($ads as $v){
+            $jusha_data = empty($res_data[$ads['id']])?array():$res_data[$ads['id']];
+            $data = array(
+                'third_platform'=>self::$third_platforms['jusha'],
+                'client_id'=>$v['client_id'],
+                'consume'=>empty($jusha_data)?0:$jusha_data['Money'],
+                'time'=>strtotime(date("Y-m-d"))-1,
+                'ads_id'=>$v['id'],
+                'discount'=>$v['discount'],
+                'real_consume'=>empty($jusha_data)?0:$jusha_data['Money']*$v['discount'],
+                'stage'=>1,
+                'pv'=>empty($jusha_data)?0:$jusha_data['Pv'],
+                'click'=>empty($jusha_data)?0:$jusha_data['Click'],
+                'effective'=>empty($jusha_data)?0:$jusha_data['Effective'],
+                'click_rate'=>empty($jusha_data)?0:$jusha_data['Click_Rate'],
+                'type'=>2,
+            );
+            $this->MConsume->saveConsumeData($data);
+        }
+        echo "Crontab jushaCrontabNew2 end---".date('Y-m-d H:i:s',time()).PHP_EOL;
     }
 }

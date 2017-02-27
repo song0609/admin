@@ -260,7 +260,7 @@ class Admin extends Admin_Controller {
                     }
                     $yAxis[] = array(
                         'data'=> $y,
-                        'name' => date('Y-m-d'),
+                        'name' => $putdate,
                     );
                 }
                 $data['consume']['xAxis'] = json_encode($xAxis);
