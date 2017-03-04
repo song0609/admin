@@ -3,7 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="612c0db1-5caa-4dea-8f70-46a4e9090470" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/controllers/admin.php" afterPath="$PROJECT_DIR$/application/controllers/admin.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/controllers/crontab.php" afterPath="$PROJECT_DIR$/application/controllers/crontab.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/views/client/ads_info.php" afterPath="$PROJECT_DIR$/application/views/client/ads_info.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/controllers/client.php" afterPath="$PROJECT_DIR$/application/controllers/client.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/models/mconsume.php" afterPath="$PROJECT_DIR$/application/models/mconsume.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="admin.iws" />
@@ -27,19 +29,28 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="adver_list.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/application/views/admin/adver_list.php">
+      <file leaf-file-name="crontab.php" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/application/controllers/crontab.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="134" column="62" selection-start="5082" selection-end="5082" vertical-scroll-proportion="-20.37143" vertical-offset="3441" max-vertical-offset="5270">
+            <state line="187" column="20" selection-start="7918" selection-end="7918" vertical-scroll-proportion="-0.95" vertical-offset="6348" max-vertical-offset="7471">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="crontab.php" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/application/controllers/crontab.php">
+      <file leaf-file-name="ads_info.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/application/views/admin/ads_info.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="186" column="23" selection-start="7914" selection-end="7914" vertical-scroll-proportion="0.118965514" vertical-offset="5697" max-vertical-offset="7409">
+            <state line="77" column="21" selection-start="3653" selection-end="3653" vertical-scroll-proportion="-14.771428" vertical-offset="1870" max-vertical-offset="4960">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ads_info.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/application/views/client/ads_info.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="72" column="55" selection-start="3325" selection-end="3337" vertical-scroll-proportion="-4.1714287" vertical-offset="2086" max-vertical-offset="4898">
               <folding />
             </state>
           </provider>
@@ -76,23 +87,23 @@
         <option value="$PROJECT_DIR$/application/views/admin/adver_form.php" />
         <option value="$PROJECT_DIR$/application/models/mclient.php" />
         <option value="$PROJECT_DIR$/application/views/client/adver_form.php" />
-        <option value="$PROJECT_DIR$/application/models/mconsume.php" />
         <option value="$PROJECT_DIR$/application/views/admin/ads_info.php" />
         <option value="$PROJECT_DIR$/application/views/client/index.php" />
-        <option value="$PROJECT_DIR$/application/views/client/ads_info.php" />
-        <option value="$PROJECT_DIR$/application/controllers/client.php" />
         <option value="$PROJECT_DIR$/application/views/admin/index.php" />
         <option value="$PROJECT_DIR$/application/views/admin/adver_list.php" />
-        <option value="$PROJECT_DIR$/application/controllers/admin.php" />
         <option value="$PROJECT_DIR$/application/controllers/crontab.php" />
+        <option value="$PROJECT_DIR$/application/models/mconsume.php" />
+        <option value="$PROJECT_DIR$/application/controllers/admin.php" />
+        <option value="$PROJECT_DIR$/application/views/client/ads_info.php" />
+        <option value="$PROJECT_DIR$/application/controllers/client.php" />
       </list>
     </option>
   </component>
   <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" />
   <component name="ProjectFrameBounds">
-    <option name="x" value="54" />
+    <option name="x" value="67" />
     <option name="y" value="-8" />
-    <option name="width" value="1320" />
+    <option name="width" value="1307" />
     <option name="height" value="784" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
@@ -121,7 +132,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -150,7 +160,141 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="share" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="admin" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="admin" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="share" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="bootstrap" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="admin" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="admin" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="share" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="bootstrap" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="img" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="admin" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="admin" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="application" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="admin" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="admin" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="application" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="views" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="admin" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="admin" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="application" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="views" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="client" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="admin" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="admin" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="application" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="views" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="admin" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="admin" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="admin" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="application" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="models" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -174,6 +318,7 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -223,15 +368,15 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="54" y="-8" width="1320" height="784" extended-state="7" />
+    <frame x="67" y="-8" width="1307" height="784" extended-state="7" />
     <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.17432646" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.13312203" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.19809826" sideWeight="0.5" order="1" side_tool="false" content_ui="combo" />
+      <window_info id="Structure" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.09127302" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.20096077" sideWeight="0.5" order="1" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
@@ -239,11 +384,11 @@
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
     </layout>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -263,16 +408,6 @@
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/application/controllers/client.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="66" column="33" selection-start="2806" selection-end="2806" vertical-scroll-proportion="0.0" vertical-offset="1419" max-vertical-offset="6045" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/views/client/ads_info.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="123" column="30" selection-start="4613" selection-end="4613" vertical-scroll-proportion="0.0" vertical-offset="3512" max-vertical-offset="4464" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/application/controllers/client.php">
       <provider selected="true" editor-type-id="text-editor">
         <state line="66" column="33" selection-start="2806" selection-end="2806" vertical-scroll-proportion="0.0" vertical-offset="1698" max-vertical-offset="6045" />
@@ -453,11 +588,6 @@
         <state line="13" column="6" selection-start="517" selection-end="517" vertical-scroll-proportion="-2.9551723" vertical-offset="2117" max-vertical-offset="2697" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/application/models/mconsume.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="35" column="60" selection-start="1147" selection-end="1147" vertical-scroll-proportion="-6.8285713" vertical-offset="846" max-vertical-offset="2170" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/application/controllers/login.php">
       <provider selected="true" editor-type-id="text-editor">
         <state line="52" column="33" selection-start="2201" selection-end="2201" vertical-scroll-proportion="0.7222222" vertical-offset="1209" max-vertical-offset="2852" />
@@ -483,43 +613,66 @@
         <state line="51" column="119" selection-start="2062" selection-end="2062" vertical-scroll-proportion="0.32068965" vertical-offset="1395" max-vertical-offset="4464" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/application/views/client/ads_info.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="129" column="10" selection-start="5013" selection-end="5013" vertical-scroll-proportion="0.51896554" vertical-offset="3698" max-vertical-offset="4681" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/views/admin/ads_info.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="77" column="21" selection-start="3653" selection-end="3653" vertical-scroll-proportion="-36.028572" vertical-offset="1126" max-vertical-offset="4960" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/controllers/client.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="114" column="0" selection-start="4737" selection-end="4737" vertical-scroll-proportion="4.448276" vertical-offset="954" max-vertical-offset="9672" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/application/views/admin/index.php">
       <provider selected="true" editor-type-id="text-editor">
         <state line="29" column="24" selection-start="1147" selection-end="1147" vertical-scroll-proportion="-1.1758621" vertical-offset="1581" max-vertical-offset="5115" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/application/controllers/admin.php">
+    <entry file="file://$PROJECT_DIR$/application/views/admin/adver_list.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="262" column="42" selection-start="10228" selection-end="10228" vertical-scroll-proportion="0.0" vertical-offset="8122" max-vertical-offset="13578">
+        <state line="134" column="62" selection-start="5082" selection-end="5082" vertical-scroll-proportion="0.0" vertical-offset="3441" max-vertical-offset="5270">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/application/views/admin/adver_list.php">
+    <entry file="file://$PROJECT_DIR$/share/bootstrap/img/bg.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/share/bootstrap/img/brand.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/controllers/admin.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="134" column="62" selection-start="5082" selection-end="5082" vertical-scroll-proportion="-20.37143" vertical-offset="3441" max-vertical-offset="5270">
+        <state line="237" column="34" selection-start="9124" selection-end="9124" vertical-scroll-proportion="0.1724138" vertical-offset="7247" max-vertical-offset="13578">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/controllers/client.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="358" column="17" selection-start="14140" selection-end="14140" vertical-scroll-proportion="1.9584087" vertical-offset="10015" max-vertical-offset="11470">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/views/client/ads_info.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="72" column="55" selection-start="3325" selection-end="3337" vertical-scroll-proportion="-4.1714287" vertical-offset="2086" max-vertical-offset="4898">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/views/admin/ads_info.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="77" column="21" selection-start="3653" selection-end="3653" vertical-scroll-proportion="-14.771428" vertical-offset="1870" max-vertical-offset="4960">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/models/mconsume.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="11" column="20" selection-start="228" selection-end="228" vertical-scroll-proportion="-0.8920742" vertical-offset="870" max-vertical-offset="2263">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/application/controllers/crontab.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="186" column="23" selection-start="7914" selection-end="7914" vertical-scroll-proportion="0.118965514" vertical-offset="5697" max-vertical-offset="7409">
+        <state line="187" column="20" selection-start="7918" selection-end="7918" vertical-scroll-proportion="-0.95" vertical-offset="6348" max-vertical-offset="7471">
           <folding />
         </state>
       </provider>

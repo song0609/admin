@@ -19,7 +19,7 @@
         <div class="panel-heading">广告统计</span>
         </div>
         <!-- 统计图 -->
-        <?php if(!empty($consume)){?>
+        <?php if(!empty($xAxis)){?>
             <div id="container" class="panel panel-default">
             </div>
         <?php }?>
@@ -59,6 +59,9 @@
             <tr>
                 <th>日期</th>
                 <th>消耗</th>
+                <th>展示量</th>
+                <th>点击数</th>
+                <th>点击率</th>
             </tr>
             </thead>
             <tbody>
@@ -68,6 +71,10 @@
                         echo "<tr>";
                         echo "<td>{$value['time']}</td>";
                         echo "<td>{$value['real_consume']}￥</td>";
+                        echo "<td>{$value['pv']}</td>";
+                        echo "<td>{$value['click']}</td>";
+                        $c_p = $value['pv']!=0?round($value['click']/$value['pv']*100,2):0;
+                        echo "<td>".$c_p."%</td>";
                         echo "</tr>";
                     }
                 }

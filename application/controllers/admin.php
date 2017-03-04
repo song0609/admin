@@ -184,7 +184,7 @@ class Admin extends Admin_Controller {
             $param_data[$v] = $this->security->xss_clean($this->input->post($v));
         }
         $form = $param_data;
-        if(empty($param_data['username'])||empty($param_data['password'])){
+        /*if(empty($param_data['username'])||empty($param_data['password'])){
             $errors['password'] = "账号密码为必填";
             $this->load->model(array('MClient'),'',TRUE);
             $clients = $this->MClient->getAdvertiserList(0,100);
@@ -194,7 +194,7 @@ class Admin extends Admin_Controller {
             $data['form'] = $form;
             $this->load->view ('admin/ads_form', $data);
             return;
-        }
+        }*/
         if(!$form['id']){
             $this->MAdvertisment->saveAdvertisment($param_data);
         }else{
@@ -364,13 +364,13 @@ class Admin extends Admin_Controller {
         $consume_data = $this->MConsume->getConsumeData($opts,$order);
         if($consume_data){
             if(!empty($ads_id)){
-                return $consume_data[0]['consume'];
+                return $consume_data[0]['real_consume'];
             }else{
                 $sum = 0;
                 $aid = array();
                 foreach($consume_data as $v){
                     if(!in_array($v['ads_id'],$aid)){
-                        $sum += $v['consume'];
+                        $sum += $v['real_consume'];
                         $aid[] = $v['ads_id'];
                     }
                 }

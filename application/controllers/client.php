@@ -88,7 +88,11 @@ class Client extends Client_Controller {
                 $data['error'] = '结束日期大于开始日期';
             }else{
                 $stime = strtotime($sdate);
-                $etime = strtotime($edate)+3300*24-1;
+                $etime = strtotime($edate)+3600*24-1;
+                $is_today = false;
+                if(time()>$stime && time()<$etime){
+                    $is_today = true;
+                }
                 $opt = array(
                     'client_id'=>$client_id,
                     'type'=>2,
@@ -101,14 +105,30 @@ class Client extends Client_Controller {
                     foreach($consume_list as $k=>$v){
                         $consume_list[$k]['time'] = date('Y-m-d',$v['time']);
                     }
+                    if($is_today){
+                        $today_data = $this->getTodayData($client_id,$aid);
+                        $today_data['time'] = date('Y-m-d',$today_data['time']);
+                        array_unshift($consume_list,$today_data);
+                    }
                 }else{
                     $list = $this->MConsume->getConsumeData($opt);
                     $consume_list = array();
                     foreach($list as $v){
                         $date = date('Y-m-d',$v['time']);
-                        if(!isset($consume_list[$date]))$consume_list[$date]['real_consume']=0;
+                        if(!isset($consume_list[$date])){
+                            $consume_list[$date]['real_consume']=0;
+                            $consume_list[$date]['pv']=0;
+                            $consume_list[$date]['click']=0;
+                        }
                         $consume_list[$date]['real_consume'] += $v['real_consume'];
+                        $consume_list[$date]['pv'] += $v['pv'];
+                        $consume_list[$date]['click'] += $v['click'];
                         $consume_list[$date]['time'] = $date;
+                    }
+                    if($is_today){
+                        $today_data = $this->getTodayData($client_id,0);
+                        $today_data['time'] = date('Y-m-d',$today_data['time']);
+                        array_unshift($consume_list,$today_data);
                     }
                 }
             }
@@ -116,6 +136,7 @@ class Client extends Client_Controller {
         }
         $data['consume_list'] = $consume_list;
         $data['total_count'] = $total_count;
+        $data['xAxis'] = $xAxis;
         $data['consume']['xAxis'] = json_encode($xAxis);
         $data['consume']['yAxis'] = json_encode($yAxis);
         $this->load->view('client/ads_info',$data);
@@ -208,13 +229,13 @@ class Client extends Client_Controller {
         $consume_data = $this->MConsume->getConsumeData($opts,$order);
         if($consume_data){
             if(!empty($ads_id)){
-                return $consume_data[0]['consume'];
+                return $consume_data[0]['real_consume'];
             }else{
                 $sum = 0;
                 $aid = array();
                 foreach($consume_data as $v){
                     if(!in_array($v['ads_id'],$aid)){
-                        $sum += $v['consume'];
+                        $sum += $v['real_consume'];
                         $aid[] = $v['ads_id'];
                     }
                 }
@@ -303,5 +324,42 @@ class Client extends Client_Controller {
             $data['yAxis'] = $yAxis;
         }
         return $data;
+    }
+
+
+    private function getTodayData($client_id, $ads_id=0){
+        $this->load->model('MConsume','',TRUE);
+        $opts = array(
+            'client_id'=>$client_id,
+            'type'=>1,
+            'stime'=>strtotime(date("Y-m-d")),
+            'etime'=>strtotime(date("Y-m-d"))+24*3600-2,
+        );
+        !empty($ads_id)?$opts['ads_id']=$ads_id:'';
+        $order = array(
+            'key'=>'time',
+            'value'=>'desc',
+        );
+        $consume_data = $this->MConsume->getConsumeData($opts,$order);
+        if($consume_data){
+            if(!empty($ads_id)){
+                return $consume_data[0];
+            }else{
+                $sum = 0;
+                $pv = 0;
+                $click = 0;
+                $aid = array();
+                foreach($consume_data as $v){
+                    if(!in_array($v['ads_id'],$aid)){
+                        $sum += $v['real_consume'];
+                        $pv += $v['pv'];
+                        $click += $v['click'];
+                        $aid[] = $v['ads_id'];
+                    }
+                }
+                return array('pv'=>$pv,'click'=>$click,'real_consume'=>$sum,'time'=>strtotime(date('Y-m-d')));
+            }
+        }
+        return array('pv'=>0,'click'=>0,'real_consume'=>0,'time'=>strtotime(date('Y-m-d')));
     }
 }

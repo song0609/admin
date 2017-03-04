@@ -61,7 +61,7 @@ class MConsume extends CI_Model{
         if(!empty($opts['etime'])){
             $this->db->where('time <=',$opts['etime']);
         }
-        $this->db->select('sum(consume) as sum_consume');
+        $this->db->select('sum(real_consume) as sum_consume');
         $query = $this->db->get('consume');
         return $query->result_array();
     }
