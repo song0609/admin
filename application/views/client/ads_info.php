@@ -54,33 +54,63 @@
             </form>
         </div>
 
-        <table class="table table-hover table-striped" style="border:1px solid #D0D0D0">
-            <thead>
-            <tr>
-                <th>日期</th>
-                <th>消耗</th>
-                <th>展示量</th>
-                <th>点击数</th>
-                <th>点击率</th>
-            </tr>
-            </thead>
-            <tbody>
-            <?php
-                if(!empty($consume_list)){
-                    foreach($consume_list as $value){
-                        echo "<tr>";
-                        echo "<td>{$value['time']}</td>";
-                        echo "<td>{$value['real_consume']}￥</td>";
-                        echo "<td>{$value['pv']}</td>";
-                        echo "<td>{$value['click']}</td>";
-                        $c_p = $value['pv']!=0?round($value['click']/$value['pv']*100,2):0;
-                        echo "<td>".$c_p."%</td>";
-                        echo "</tr>";
+        <?php
+            if($select_ads != 0){
+
+        ?>
+                <table class="table table-hover table-striped" style="border:1px solid #D0D0D0">
+                    <thead>
+                    <tr>
+                        <th>日期</th>
+                        <th>消耗</th>
+                        <th>展示量</th>
+                        <th>点击数</th>
+                        <th>点击率</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <?php
+                    if(!empty($consume_list)){
+                        foreach($consume_list as $value){
+                            echo "<tr>";
+                            echo "<td>{$value['time']}</td>";
+                            echo "<td>{$value['real_consume']}￥</td>";
+                            echo "<td>{$value['pv']}</td>";
+                            echo "<td>{$value['click']}</td>";
+                            echo "<td>{$value['click_rate']}</td>";
+                            echo "</tr>";
+                        }
                     }
-                }
-                ?>
-            </tbody>
-        </table>
+                    ?>
+                    </tbody>
+                </table>
+        <?php
+            }else{
+        ?>
+                <table class="table table-hover table-striped" style="border:1px solid #D0D0D0">
+                    <thead>
+                    <tr>
+                        <th>日期</th>
+                        <th>消耗</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <?php
+                    if(!empty($consume_list)){
+                        foreach($consume_list as $value){
+                            echo "<tr>";
+                            echo "<td>{$value['time']}</td>";
+                            echo "<td>{$value['real_consume']}￥</td>";
+                            echo "</tr>";
+                        }
+                    }
+                    ?>
+                    </tbody>
+                </table>
+        <?php
+            }
+        ?>
+
     </div>
     <!-- 列表 End -->
 

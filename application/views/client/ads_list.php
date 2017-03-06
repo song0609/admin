@@ -10,7 +10,9 @@
     <link rel="stylesheet" href="<?php echo base_url();?>share/bootstrap/css/custom.css">
     <link rel="stylesheet" href="<?php echo base_url();?>share/bootstrap/js/switch/bootstrap-switch.min.css">
 </head>
-
+<style type="text/css">
+    a{color: red;}
+</style>
 <body>
 
 <div class="container">
@@ -38,7 +40,7 @@
                 echo "<td>{$value['ads_type']}</td>";
                 echo "<td>{$value['platform']}</td>";
                 echo "<td>{$value['price']}</td>";
-                echo "<td>{$value['ads_url']}</td>";
+                echo "<td><a href='{$value['ads_url']}' target='_blank'>广告地址</a></td>";
                 $status = ($value['ads_status']=='0')?'暂停':'开启';
                 echo "<td>".$status."</td>";
                 echo "</tr>";

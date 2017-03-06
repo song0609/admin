@@ -101,13 +101,21 @@ class Client extends Client_Controller {
                 );
                 if($aid){ //查某条任务
                     $opt['ads_id'] = $aid;
+                    $ads = $this->MAdvertisment->getAdvertismentList(0,100,array('id'=>$aid));
+                    $ads = $ads[0];
                     $consume_list = $this->MConsume->getConsumeData($opt);
                     foreach($consume_list as $k=>$v){
                         $consume_list[$k]['time'] = date('Y-m-d',$v['time']);
+                        $consume_list[$k]['price'] = $ads['price'];
+                        $consume_list[$k]['pv'] = intval($v['real_consume']/$ads['price']*1000);
+                        $consume_list[$k]['click'] = intval($consume_list[$k]['pv']*floatval($v['click_rate']));
                     }
                     if($is_today){
                         $today_data = $this->getTodayData($client_id,$aid);
                         $today_data['time'] = date('Y-m-d',$today_data['time']);
+                        $today_data['price'] = $ads['price'];
+                        $today_data['pv'] = intval($today_data['real_consume']/$ads['price']*1000);
+                        $today_data['click'] = intval($today_data['pv']*floatval($today_data['click_rate']));
                         array_unshift($consume_list,$today_data);
                     }
                 }else{
@@ -117,12 +125,12 @@ class Client extends Client_Controller {
                         $date = date('Y-m-d',$v['time']);
                         if(!isset($consume_list[$date])){
                             $consume_list[$date]['real_consume']=0;
-                            $consume_list[$date]['pv']=0;
-                            $consume_list[$date]['click']=0;
+                            //$consume_list[$date]['pv']=0;
+                            //$consume_list[$date]['click']=0;
                         }
                         $consume_list[$date]['real_consume'] += $v['real_consume'];
-                        $consume_list[$date]['pv'] += $v['pv'];
-                        $consume_list[$date]['click'] += $v['click'];
+                        //$consume_list[$date]['pv'] += $v['pv'];
+                        //$consume_list[$date]['click'] += $v['click'];
                         $consume_list[$date]['time'] = $date;
                     }
                     if($is_today){
@@ -134,6 +142,7 @@ class Client extends Client_Controller {
             }
 
         }
+        $data['select_ads'] = $aid;
         $data['consume_list'] = $consume_list;
         $data['total_count'] = $total_count;
         $data['xAxis'] = $xAxis;
@@ -352,14 +361,12 @@ class Client extends Client_Controller {
                 foreach($consume_data as $v){
                     if(!in_array($v['ads_id'],$aid)){
                         $sum += $v['real_consume'];
-                        $pv += $v['pv'];
-                        $click += $v['click'];
                         $aid[] = $v['ads_id'];
                     }
                 }
-                return array('pv'=>$pv,'click'=>$click,'real_consume'=>$sum,'time'=>strtotime(date('Y-m-d')));
+                return array('click_rate'=>0,'pv'=>$pv,'click'=>$click,'real_consume'=>$sum,'time'=>strtotime(date('Y-m-d')));
             }
         }
-        return array('pv'=>0,'click'=>0,'real_consume'=>0,'time'=>strtotime(date('Y-m-d')));
+        return array('click_rate'=>0,'pv'=>0,'click'=>0,'real_consume'=>0,'time'=>strtotime(date('Y-m-d')));
     }
 }

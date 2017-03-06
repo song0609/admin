@@ -44,7 +44,7 @@
                 echo "<td>{$value['ads_type']}</td>";
                 echo "<td>{$value['platform']}</td>";
                 echo "<td>{$value['price']}</td>";
-                echo "<td>{$value['ads_url']}</td>";
+                echo "<td><a style='color: #BF4545' href='{$value['ads_url']}' target='_blank'>广告地址</a></td>";
                 $status = ($value['ads_status']=='0')?'暂停':'开启';
                 echo "<td>".$status."</td>";
                 echo "<td>{$value['discount']}</td>";
