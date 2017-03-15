@@ -13,6 +13,7 @@ class Crontab extends CI_Controller {
     );
 
     public function jushaCrontab(){
+        set_time_limit(0);
         $time = time();
         $min = date('i',$time);
         $stage = $this->_calStage($min);
@@ -51,6 +52,7 @@ class Crontab extends CI_Controller {
     }
 
     public function jushaCrontab2(){
+        set_time_limit(0);
         $time = time();
         echo "Crontab jushaCrontab2 start---".date('Y-m-d H:i:s',$time).PHP_EOL;
         $this->load->model(array('MAdvertisment','MConsume'),'',TRUE);
@@ -134,6 +136,7 @@ class Crontab extends CI_Controller {
     }
 
     public function jushaCrontabNew(){
+        set_time_limit(0);
         $time = time();
         $min = date('i',$time);
         $stage = $this->_calStage($min);
@@ -186,6 +189,7 @@ class Crontab extends CI_Controller {
     }
 
     public function jushaCrontabNew2(){
+        set_time_limit(0);
         $time = time();
         echo "Crontab jushaCrontabNew2 start---".date('Y-m-d H:i:s',$time).PHP_EOL;
         $this->load->model(array('MAdvertisment','MConsume'),'',TRUE);

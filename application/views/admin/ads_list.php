@@ -24,6 +24,7 @@
 
             <thead>
             <tr>
+                <th>广告ID</th>
                 <th>广告名称</th>
                 <th>广告主名称</th>
                 <th>广告模式</th>
@@ -39,6 +40,7 @@
             <?php
             foreach($data as $value){
                 echo "<tr>";
+                echo "<td>{$value['id']}</td>";
                 echo "<td>{$value['ads_name']}</td>";
                 echo "<td>{$clients[$value['client_id']]['username']}</td>";
                 echo "<td>{$value['ads_type']}</td>";
