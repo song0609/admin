@@ -166,7 +166,7 @@ class Crontab extends CI_Controller {
             echo "jusha api error:".$res['msg'].PHP_EOL;
             return;
         }
-        $res_data = $res['data'][$date];
+        $res_data = empty($res['data'][$date])?0:$res['data'][$date];
         foreach($ads as $v){
             $jusha_data = empty($res_data[$v['id']])?array():$res_data[$v['id']];
             $data = array(
@@ -215,7 +215,7 @@ class Crontab extends CI_Controller {
             echo "jusha api error:".$res['msg'].PHP_EOL;
             return;
         }
-        $res_data = $res['data'][$date];
+        $res_data = empty($res['data'][$date])?0:$res['data'][$date];
         foreach($ads as $v){
             $jusha_data = empty($res_data[$v['id']])?array():$res_data[$v['id']];
             $data = array(
