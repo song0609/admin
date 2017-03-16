@@ -194,7 +194,7 @@ class Crontab extends CI_Controller {
         echo "Crontab jushaCrontabNew2 start---".date('Y-m-d H:i:s',$time).PHP_EOL;
         $this->load->model(array('MAdvertisment','MConsume'),'',TRUE);
         $ads = $this->MAdvertisment->getAdvertismentList(0,10000,array('third_platform'=>self::$third_platforms['jusha']));
-        $api_url = "https://www.jusha.com/client/xxx.php";
+        $api_url = "https://www.jusha.com/client/shunwang.php";
         $date = date("Y-m-d",strtotime("-1 day"));
         $ads_arr = array();
         foreach($ads as $v){
