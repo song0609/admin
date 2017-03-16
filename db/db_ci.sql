@@ -1,20 +1,3 @@
-/*
-Navicat MySQL Data Transfer
-
-Source Server         : localhost
-Source Server Version : 50524
-Source Host           : localhost:3306
-Source Database       : db_ci
-
-Target Server Type    : MYSQL
-Target Server Version : 50524
-File Encoding         : 65001
-
-Date: 2017-01-21 18:17:51
-*/
-
-SET FOREIGN_KEY_CHECKS=0;
-
 -- ----------------------------
 -- Table structure for tc_admin
 -- ----------------------------
@@ -24,7 +7,12 @@ CREATE TABLE `tc_admin` (
   `username` varchar(32) NOT NULL DEFAULT '' COMMENT '用户名',
   `password` varchar(160) NOT NULL DEFAULT '' COMMENT '密码',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of tc_admin
+-- ----------------------------
+INSERT INTO `tc_admin` VALUES ('1', 'root', '202cb962ac59075b964b07152d234b70');
 
 -- ----------------------------
 -- Table structure for tc_advertisment
@@ -44,7 +32,8 @@ CREATE TABLE `tc_advertisment` (
   `username` varchar(128) NOT NULL DEFAULT '' COMMENT '用户名',
   `password` varchar(255) NOT NULL DEFAULT '' COMMENT '密码',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 
 -- ----------------------------
 -- Table structure for tc_client
@@ -62,7 +51,12 @@ CREATE TABLE `tc_client` (
   `remain_count` decimal(15,2) DEFAULT '0.00' COMMENT '账户余额',
   PRIMARY KEY (`id`),
   UNIQUE KEY `username` (`username`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of tc_client
+-- ----------------------------
+INSERT INTO `tc_client` VALUES ('1', 'client', 'e10adc3949ba59abbe56e057f20f883e', '唯品会', '张三', '18826788988', '12344@qq.com', '1', '1.00');
 
 -- ----------------------------
 -- Table structure for tc_consume
@@ -74,8 +68,18 @@ CREATE TABLE `tc_consume` (
   `third_platform` tinyint(4) NOT NULL DEFAULT '0' COMMENT '第三方平台',
   `consume` decimal(15,2) NOT NULL DEFAULT '0.00' COMMENT '当日当前消耗',
   `time` int(11) NOT NULL DEFAULT '0' COMMENT '时间',
+  `ads_id` int(11) NOT NULL DEFAULT '0' COMMENT '任务id',
+  `type` tinyint(4) NOT NULL DEFAULT '1' COMMENT '消耗值类型：1为普通，2为当日最后消耗',
+  `discount` decimal(15,2) NOT NULL DEFAULT '1.00' COMMENT '当前折扣',
+  `real_consume` decimal(15,2) NOT NULL DEFAULT '0.00' COMMENT '乘以折扣后的真实消耗',
+  `stage` int(4) NOT NULL DEFAULT '0' COMMENT '分钟数阶段：0-15:1,15-30:2,30-45:3,45-59:4',
+  `pv` bigint(20) NOT NULL DEFAULT '0' COMMENT 'pv',
+  `click` bigint(20) NOT NULL DEFAULT '0' COMMENT '点击数',
+  `effective` bigint(20) NOT NULL DEFAULT '0' COMMENT '计费次数',
+  `click_rate` varchar(10) CHARACTER SET utf8 NOT NULL COMMENT '点击率',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 
 -- ----------------------------
 -- Table structure for tc_finance
@@ -87,9 +91,9 @@ CREATE TABLE `tc_finance` (
   `money` decimal(15,2) NOT NULL DEFAULT '0.00' COMMENT '金额',
   `time` int(10) NOT NULL DEFAULT '0' COMMENT '充值时间',
   `note` varchar(128) NOT NULL DEFAULT '' COMMENT '备注',
-  `third_platform` tinyint(4) NOT NULL DEFAULT '0' COMMENT '充值到的平台',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 
 -- ----------------------------
 -- Table structure for tc_third_platform
@@ -97,9 +101,9 @@ CREATE TABLE `tc_finance` (
 DROP TABLE IF EXISTS `tc_third_platform`;
 CREATE TABLE `tc_third_platform` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
-  `third_platform` int(10) NOT NULL DEFAULT '0' COMMENT '第三方平台标识',
   `client_id` int(10) NOT NULL DEFAULT '0' COMMENT '客户id',
   `total_account` decimal(15,2) NOT NULL DEFAULT '0.00' COMMENT '用户在第三方平台充值总额',
   `pay_account` decimal(15,2) NOT NULL DEFAULT '0.00' COMMENT '历史消耗总额',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
