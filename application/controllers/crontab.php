@@ -157,7 +157,7 @@ class Crontab extends CI_Controller {
         $sdate = $date;
         $edate = $date;
         $ads_str = implode(",",$ads_arr);
-        $sign = md5($sdate.$edate.$ads_str);
+        $sign = md5($sdate.$edate.self::$jusha_key);
         $api_url .= "?advid=".$ads_str."&sdate=".$sdate."&edate=".$edate."&sign=".$sign;
         $res = $this->get_content($api_url, null);
         $res = json_decode($res,true);
@@ -207,7 +207,7 @@ class Crontab extends CI_Controller {
         $sdate = $date;
         $edate = $date;
         $ads_str = implode(",",$ads_arr);
-        $sign = md5($sdate.$edate.$ads_str);
+        $sign = md5($sdate.$edate.self::$jusha_key);
         $api_url .= "?advid=".$ads_str."&sdate=".$sdate."&edate=".$edate."&sign=".$sign;
         $res = $this->get_content($api_url, null);
         $res = json_decode($res,true);
