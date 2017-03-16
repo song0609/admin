@@ -57,9 +57,10 @@ class Admin extends Admin_Controller {
         $vo = array();
         $username = $this ->session->userdata('username');
         $password = $this->security->xss_clean($this->input->post('password'));
+        $oldpassword = $this->security->xss_clean($this->input->post('oldpassword'));
         $this->load->model('MAdmin','',TRUE);
         $result = $this->MAdmin->getAdminByUsername($username);
-        if(md5($password)!=$result[0]['password']){
+        if(md5($oldpassword)!=$result[0]['password']){
             $vo['errors'] = "原密码错误";
             $this->load->view('admin/password_form',$vo);
             return;
