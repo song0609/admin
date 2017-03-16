@@ -49,7 +49,6 @@
             <thead>
             <tr>
                 <th>广告任务名称</th>
-                <th>广告主名称</th>
                 <th>广告模式</th>
                 <th>投放平台</th>
                 <th>广告单价</th>
@@ -65,7 +64,7 @@
                     foreach($ads as $value){
                         echo "<tr>";
                         echo "<td>{$value['ads_name']}</td>";
-                        echo "<td>{$clients[$value['client_id']]['username']}</td>";
+                        //echo "<td>{$clients[$value['client_id']]['username']}</td>";
                         echo "<td>{$value['ads_type']}</td>";
                         echo "<td>{$value['platform']}</td>";
                         echo "<td>{$value['price']}</td>";
