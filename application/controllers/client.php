@@ -107,8 +107,10 @@ class Client extends Client_Controller {
                     foreach($consume_list as $k=>$v){
                         $consume_list[$k]['time'] = date('Y-m-d',$v['time']);
                         $consume_list[$k]['price'] = $ads['price'];
-                        $consume_list[$k]['pv'] = intval($v['real_consume']/$ads['price']*1000);
-                        $consume_list[$k]['click'] = intval($consume_list[$k]['pv']*floatval($v['click_rate']));
+                        //$consume_list[$k]['pv'] = intval($v['real_consume']/$ads['price']*1000);
+                        $consume_list[$k]['pv'] = intval($v['pv']);
+                        $consume_list[$k]['click'] = intval($v['click']);
+                        //$consume_list[$k]['click'] = intval($consume_list[$k]['pv']*floatval($v['click_rate']));
                     }
                     if($is_today){
                         $today_data = $this->getTodayData($client_id,$aid);
