@@ -116,8 +116,8 @@ class Client extends Client_Controller {
                         $today_data = $this->getTodayData($client_id,$aid);
                         $today_data['time'] = date('Y-m-d',$today_data['time']);
                         $today_data['price'] = $ads['price'];
-                        $today_data['pv'] = intval($today_data['real_consume']/$ads['price']*1000);
-                        $today_data['click'] = intval($today_data['pv']*floatval($today_data['click_rate']));
+                        //$today_data['pv'] = intval($today_data['real_consume']/$ads['price']*1000);
+                        //$today_data['click'] = intval($today_data['pv']*floatval($today_data['click_rate']));
                         array_unshift($consume_list,$today_data);
                     }
                 }else{
