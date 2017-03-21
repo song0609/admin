@@ -62,6 +62,7 @@ class Client extends Client_Controller {
                     continue;
                 }
                 $y[$i] = $today['yAxis'][$i] - $today['yAxis'][$i-1];
+                $y[$i]<0?$y[$i]=0:'';
             }
             $yAxis[] = array(
                 'data'=> $y,
@@ -77,6 +78,7 @@ class Client extends Client_Controller {
                     continue;
                 }
                 $y[$i] = $lastday['yAxis'][$i] - $lastday['yAxis'][$i-1];
+                $y[$i]<0?$y[$i]=0:'';
             }
             $yAxis[] = array(
                 'data'=> $y,

@@ -160,6 +160,7 @@ class Crontab extends CI_Controller {
         $sign = md5($sdate.$edate.self::$jusha_key);
         $api_url .= "?advid=".$ads_str."&sdate=".$sdate."&edate=".$edate."&sign=".$sign;
         $res = $this->get_content($api_url, null);
+        echo date('Y-m-d H:i:s',time())." api return".$res.PHP_EOL;
         $res = json_decode($res,true);
 
         if($res['code'] != 0){
